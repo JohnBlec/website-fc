@@ -1,0 +1,47 @@
+.L {
+    background: red;
+    color: white;
+    text-decoration: none;
+    margin-right: 5px;
+    padding: 0.9%;
+}
+
+.L:hover {
+    color: white;
+}
+
+.D {
+    background: gray;
+    color: white;
+    text-decoration: none;
+    margin-right: 5px;
+    padding: 2px;
+}
+
+.D:hover {
+    color: white;
+}
+
+.W {
+    background: green;
+    color: white;
+    text-decoration: none;
+    margin-right: 5px;
+    padding: 1.58%;
+}
+
+.W:hover {
+    color: white;
+}
+
+.play-off {
+    background: rgba(128, 128, 128, 0.158);
+}
+
+.headt {
+    color: black;
+}
+
+.tAegis {
+    font-weight: bold;
+}
