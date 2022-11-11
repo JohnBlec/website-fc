@@ -1,0 +1,22 @@
+.nav-link {
+    border-bottom: 5px solid transparent;
+}
+
+.nav-link:hover {
+    border-bottom: 5px solid gray;
+}
+
+.dropd {
+    color: rgba(0, 0, 0, 0.568);
+    font-weight: bold;
+}
+
+.dropd:active {
+    color: white;
+    background: rgba(0, 0, 0, 0.288);
+    font-weight: bold;
+}
+
+.text {
+     
+}

@@ -1,0 +1,77 @@
+.match {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #efefef;
+}
+
+.match:hover {
+    transform:scale(1.02);
+    transition: 0.1s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.hMonth {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+    line-height: 34px;
+    max-width: 13%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.borderM {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    height: 10px;
+    margin: 20px 0px;
+}
+
+.linkM {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    text-decoration: none;
+    flex: 1 0 auto;
+    padding: 1.2rem;
+    color: black;
+}
+
+.linkM:hover {
+    color: black;
+}
+
+
+.dateM {
+    text-transform: uppercase;
+    line-height: 2.8rem;
+    width: 8rem;
+    min-width: 4rem;
+    border-right: 1px solid rgba(167, 167, 167, 0.301);
+}
+
+.competition {
+    text-align: center;
+    white-space: nowrap;
+    width: 5rem;
+    min-width: 9rem;
+    border-right: 1px solid rgba(167, 167, 167, 0.301);
+}
+
+.stage {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 10rem;
+    padding: 0 0.8rem;
+    border-right: 1px solid rgba(167, 167, 167, 0.301);
+}
+
+.teams {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}

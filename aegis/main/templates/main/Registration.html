@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Регистрация | ФК Аегис</title>
+    <link rel="shortcut icon" href="{% static 'main/img/AegisICO.ico' %}" type="image/x-icon">
+    <link href="{% static 'main/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/signin.css' %}" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+    
+<main class="form-signin w-100 m-auto">
+  <form method="post">
+    <img class="mb-4" src="{% static 'main/img/Aegis_Logo.png' %}" alt="" width="90" height="90">
+    <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+
+    {% csrf_token %}
+    {% for f in form %}
+    <div type="{{ f.label }}" class="form-floating">
+      <label class="place" for="{{ f.id_for_label }}">{{ f.label }}</label>
+      {{ f }}
+    </div>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+
+    <button class="w-100 btn btn-lg btn-secondary" type="submit">Зарегистрироваться</button>
+  </form>
+</main>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+.number {
+    font-family: Impact, fantasy;
+    font-size: 30px;
+    margin-left: 20px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.884);
+
+}
+
+.hWord {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+}
+
+.surename {
+    font: small-caps bold 25px/1 sans-serif;
+    margin: 20px;
+    text-transform: none;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.884);
+}
+
+.background {
+    background-color: gray; 
+    border: 1px solid black;
+}
+
+.surename:hover { 
+    color: rgba(0, 0, 0, 0.884);
+}
+
+.number:hover { 
+    color: rgba(0, 0, 0, 0.884); 
+}

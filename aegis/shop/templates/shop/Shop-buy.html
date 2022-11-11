@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+{{ product.cat }} {{ product.kind }} {{ product.year|date:'Y' }} | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/shop-by.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-top: 20px;">
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+  <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5" style="background: rgba(128, 128, 128, 0.301);">
+      <img class="img-fluid rounded mx-auto d-block" src="{{ product.photo.url }}" alt="..." >
+  </div>
+  <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5" style="background: rgba(128, 128, 128, 0.1);">
+    <div style="margin: 20px 0;">
+      <div class="namekit">ФК Аегис {{ product.cat }} {{ product.kind }} {{ product.year|date:'Y' }}</div>
+    <div class="price">{{ product.price }} ₽</div>
+    </div>
+    <div style="font: small-caps bold 15px/1 sans-serif;">Размер:
+      <select name="size" id="size" style="border-radius: 5px">
+        <option>XS</option>
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+        <option>XL</option>
+        <option>XXL</option>
+        <option>3XL</option>
+      </select>
+    </div>
+
+    <div class="def-number-input number-input safari_only" style="font: small-caps bold 15px/1 sans-serif;"> Количество:
+      <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+        class="minus"></button>
+      <input class="quantity fw-bold text-black" min="1" max="9" name="quantity" value="1"
+        type="number" style="border-radius: 5px;">
+      <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+        class="plus"></button>
+    </div>
+
+    <div class="text-center">
+      <a href="#">
+      <button type="button" class="btn-secondary bttn">Добавить в корзину</button>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

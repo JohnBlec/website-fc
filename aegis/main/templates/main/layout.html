@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'main/img/AegisICO.ico' %}" type="image/x-icon">
+    <link href="{% static 'main/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/main.css' %}" rel="stylesheet">
+  {% block css %}
+  {% endblock %}
+</head>
+
+<body>
+  <header class="p-2" style="background: rgba(0, 0, 0, 0.116);">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <img src="{% static 'main/img/Aegis_Logo.png' %}" alt="Aegis Logo" width="90" height="90">
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Главная</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">Клуб</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item dropd" href="{% url 'players' %}">Состав команды</a></li>
+              <li><a class="dropdown-item dropd" href="#">Достижения</a></li>
+              <li><a class="dropdown-item dropd" href="{% url 'history' %}">История</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'match' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Матчи</a></li>
+          <li><a href="{% url 'table' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Таблица</a></li>
+          <li><a href="{% url 'shop' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Магазин</a></li>
+        </ul>
+
+        <div class="text-end">
+          {% if request.user.is_authenticated %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item dropd" href="{% url 'players' %}">Корзина</a></li>
+              <li><a class="dropdown-item dropd" href="{% url 'logout' %}">Выйти</a></li>
+            </ul>
+          </div>
+          {% else %}
+          <a href="{% url 'singIn' %}">
+          <button type="button" class="btn btn-secondary me-2">Вход</button>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</header>
+
+  {% block content %}
+  {% endblock %}
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col-md-4 d-flex align-items-center">
+            <span class="mb-3 mb-md-0 text-muted">© 2022 Official website of FC Aegis</span>
+          </div>
+          <a href="#" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img src="{% static 'main/img/Aegis_Logo.png' %}" alt="Aegis Logo" width="80" height="80">
+          </a>
+          <ul class="nav col-md-3 justify-content-end list-unstyled d-flex">
+            <li ><a class="text-muted" href="https://vk.com/fc.aegis"><img src="{% static 'main/img/VK_Logo.png' %}" alt="Vk Logo" width="40" height="40">
+          </ul>
+        </footer>
+      </div>
+
+      <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

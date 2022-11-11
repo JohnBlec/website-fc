@@ -1,0 +1,150 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Турнирная таблица | ФК Аегис
+{% endblock %}
+
+    {% block css %}
+    <link href="{% static 'main/css/table.css' %}" rel="stylesheet">
+    {% endblock %}
+
+  {% block content %}
+    <div class="container">
+        <div>
+        <h2 style="margin-top: 20px;">Таблица</h2>
+            <img href="https://vk.com/kflmafia" class="mx-auto d-block" src="image/KFL.jpg" alt="KFL Logo" 
+                width="15%" height="15%" style="margin-top: -30px;">
+        <h4 class="text-end">2022 г.</h4>
+        <div>
+     <table class="table table-hover">
+        <thead>
+            <tr style="background: gray;">
+              <th scope="col" class="headt">#</th>
+              <th scope="col" class="headt">Команда</th>
+              <th scope="col" class="headt">Игры</th>
+              <th scope="col" class="headt">В</th>
+              <th scope="col" class="headt">Н</th>
+              <th scope="col" class="headt">П</th>
+              <th scope="col" class="headt">Мячи</th>
+              <th scope="col" class="headt">РМ</th>
+              <th scope="col" class="headt">Форма</th>
+              <th scope="col" class="headt">Очков</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="play-off">
+              <th scope="row">1</th>
+              <td>ФК Взлёт</td>
+              <td>12</td>
+              <td>12</td>
+              <td>0</td>
+              <td>0</td>
+              <td>87:19</td>
+              <td>68</td>
+              <td>
+                <div>
+                    <span class="W">В</span><a class="W">В</a><a class="W">В</a><a class="W">В</a><a class="W">В</a></td>
+                </div>
+              <td>36</td>
+            </tr>
+            <tr class="play-off">
+                <th scope="row">2</th>
+                <td>Феникс</td>
+                <td>12</td>
+                <td>10</td>
+                <td>0</td>
+                <td>2</td>
+                <td>49:17</td>
+                <td>32</td>
+                <td><a class="W">В</a><a class="W">В</a><a class="W">В</a><a class="W">В</a><a class="W">В</a></td>
+                <td>30</td>
+            </tr>
+            <tr class="play-off">
+                <th scope="row">3</th>
+                <td>Сектор</td>
+                <td>11</td>
+                <td>8</td>
+                <td>0</td>
+                <td>3</td>
+                <td>65:16</td>
+                <td>49</td>
+                <td><a class="L">П</a><a class="L">П</a><a class="W">В</a><a class="L">П</a><a class="L">П</a></td>
+                <td>24</td>
+            </tr>
+            <tr class="play-off">
+                <th scope="row">4</th>
+                <td>ФК ПАУ</td>
+                <td>12</td>
+                <td>5</td>
+                <td>1</td>
+                <td>6</td>
+                <td>55:44</td>
+                <td>11</td>
+                <td><a class="L">П</a><a class="W">В</a><a class="L">П</a><a class="L">П</a><a class="L">П</a></td>
+                <td>16</td>
+            </tr>
+            <tr class="play-off">
+                <th scope="row">5</th>
+                <td>8 район</td>
+                <td>12</td>
+                <td>4</td>
+                <td>3</td>
+                <td>5</td>
+                <td>42:45</td>
+                <td>-3</td>
+                <td><a class="L">П</a><a class="D">Н</a><a class="D">Н</a><a class="W">В</a><a class="W">В</a></td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>Славия</td>
+                <td>10</td>
+                <td>4</td>
+                <td>1</td>
+                <td>5</td>
+                <td>33:45</td>
+                <td>-12</td>
+                <td><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="D">Н</a><a class="W">В</a></td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td class="tAegis">ФК «Аегис»</td>
+                <td class="tAegis">11</td>
+                <td class="tAegis">2</td>
+                <td class="tAegis">1</td>
+                <td class="tAegis">8</td>
+                <td class="tAegis">33:56</td>
+                <td class="tAegis">-23</td>
+                <td><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="D">Н</a><a class="L">П</a></td>
+                <td class="tAegis">7</td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>ФК Директория</td>
+                <td>11</td>
+                <td>2</td>
+                <td>0</td>
+                <td>9</td>
+                <td>37:74</td>
+                <td>-37</td>
+                <td><a class="W">В</a><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="L">П</a></td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <th scope="row">9</th>
+                <td>Куба</td>
+                <td>11</td>
+                <td>1</td>
+                <td>0</td>
+                <td>10</td>
+                <td>28:113</td>
+                <td>-85</td>
+                <td><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="L">П</a></td>
+                <td>3</td>
+            </tr>
+          </tbody>
+     </table>
+    </div>
+{% endblock %}
