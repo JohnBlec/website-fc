@@ -18,29 +18,10 @@ def history(request):
     return render(request, 'main/History.html')
 
 
-def accountsave(request):
-    Registration.as_view()
-    acc = Account()
-    acc.name_user = request.POST['username']
-    acc.email_user = request.POST['email']
-    acc.save()
-    print(request.POST['username'] + request.POST['email'])
-    return render(request, 'main/Registration.html')
-
-
 class Registration(CreateView):
     form_class = RegistrationForm
     template_name = 'main/Registration.html'
     success_url = reverse_lazy('singIn')
-"""
-    def form_valid(self, form):
-        acc = Account()
-        acc.name_user = form.username
-        acc.email_user = form.email
-        acc.save()
-        form.save()
-        return super(Registration, self).form_valid(form)
-"""
 
 class SingIn(LoginView):
     form_class = SingInForm
