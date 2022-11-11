@@ -7,7 +7,7 @@ from .forms import RegistrationForm, SingInForm
 from .models import Players
 from django.views.generic import CreateView
 
-from shop.models import Account
+#from shop.models import Account
 
 
 def home(request):

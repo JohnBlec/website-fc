@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy
 from django.db import models
@@ -8,7 +9,7 @@ from django.utils import timezone
 from .managers import CustomUserManager
 
 
-class Account(AbstractBaseUser):
+class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(gettext_lazy('email address'), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
