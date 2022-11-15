@@ -7,8 +7,6 @@ from .forms import RegistrationForm, SingInForm
 from .models import Players
 from django.views.generic import CreateView
 
-#from shop.models import Account
-
 
 def home(request):
     return render(request, 'main/Home.html')
@@ -22,6 +20,7 @@ class Registration(CreateView):
     form_class = RegistrationForm
     template_name = 'main/Registration.html'
     success_url = reverse_lazy('singIn')
+
 
 class SingIn(LoginView):
     form_class = SingInForm

@@ -28,6 +28,8 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'shop.Account'
 
+CART_SESSION_ID = 'cart'
+
 # Application definition
 
 INSTALLED_APPS = [

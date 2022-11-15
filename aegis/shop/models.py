@@ -1,10 +1,12 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
+from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from .managers import CustomUserManager
 
@@ -27,6 +29,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
+    """
+    def save(self, *args, **kwargs):
+        o = Orders()
+        o.account = self.pk
+        o.save()
+        super().save(*args, **kwargs)
+    """
 
 class Сategories(models.Model):
     name = models.CharField('Наименоние', max_length=25)
@@ -84,6 +93,7 @@ class Orders(models.Model):
     dataTime = models.DateTimeField('Дата и время заказа', null=True)
     phone_number = models.CharField('Номер телефона', validators=[phoneNumberRegex], null=True, max_length=16)
     sum_price = models.DecimalField('Сумма заказа', max_digits=10, null=True, decimal_places=2)
+    status = models.BooleanField('Завершена ли покупка?', null=True)
 
     def __str__(self):
         return self.account
@@ -91,3 +101,17 @@ class Orders(models.Model):
     class Meta:
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзины'
+
+
+class Purchases(models.Model):
+    order = models.ForeignKey('Orders', on_delete=models.SET_NULL, null=True, verbose_name="Карзина")
+    product = models.ForeignKey('Products', on_delete=models.SET_NULL, null=True, verbose_name="Товар")
+    size = models.CharField(verbose_name="Размер", max_length=4)
+    quantity = models.PositiveSmallIntegerField(verbose_name="Количество")
+
+    def __str__(self):
+        return self.product
+
+    class Meta:
+        verbose_name = 'Товар из корзины'
+        verbose_name_plural = 'Товары из корзины'
