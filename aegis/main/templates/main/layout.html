@@ -38,7 +38,7 @@
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">{{ user.email }}</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item dropd" href="{% url 'players' %}">Корзина</a></li>
+              <li><a class="dropdown-item dropd" href="{% url 'cart' user.pk %}">Корзина</a></li>
               <li><a class="dropdown-item dropd" href="{% url 'logout' %}">Выйти</a></li>
             </ul>
           </div>

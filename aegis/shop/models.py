@@ -1,12 +1,10 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
-from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.views.decorators.http import require_POST
 
 from .managers import CustomUserManager
 
@@ -29,13 +27,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
-    """
-    def save(self, *args, **kwargs):
-        o = Orders()
-        o.account = self.pk
-        o.save()
-        super().save(*args, **kwargs)
-    """
 
 class Сategories(models.Model):
     name = models.CharField('Наименоние', max_length=25)
@@ -78,9 +69,6 @@ class Products(models.Model):
     def __str__(self):
         return self.slug
 
-    def get_absolute_url(self):
-        return reverse('product', kwargs={'product_slug': self.slug})
-
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -111,6 +99,9 @@ class Purchases(models.Model):
 
     def __str__(self):
         return self.product
+
+    def total_price(self):
+        return self.quantity * self.product.price
 
     class Meta:
         verbose_name = 'Товар из корзины'

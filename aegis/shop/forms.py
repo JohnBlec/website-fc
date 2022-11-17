@@ -1,9 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-
 from shop.models import Purchases
-
-
 
 
 class CartAddPurchasesForm(ModelForm):
@@ -26,8 +23,6 @@ class CartAddPurchasesForm(ModelForm):
         fields = ['quantity', 'size']
 
         widgets = {
-            "quantity": forms.Select(
-                                choices=PRODUCT_QUANTITY_CHOICES,
-                                ),
+            "quantity": forms.Select(choices=PRODUCT_QUANTITY_CHOICES),
             "size": forms.Select(choices=SIZE_SELECTION),
         }

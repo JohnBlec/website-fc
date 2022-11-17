@@ -5,11 +5,11 @@
     <div class="row" style="margin-top: 20px;">
         {% for pr in products %}
       <div class="col-lg-4 col-md-4 col-6">
-        <a href="{{ pr.get_absolute_url }}">
+        <a href="{% url 'product' pr.slug user.pk %}">
         <img class="img-fluid rounded mx-auto d-block" src="{{ pr.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
         </a>
         <div style="margin: 20px 0;">
-            <a href="{{ pr.get_absolute_url }}" class="namekit">ФК Аегис {{ pr.cat }} {{ pr.kind }} {{ pr.year|date:'Y' }}</a>
+            <a href="{% url 'product' pr.slug user.pk %}" class="namekit">ФК Аегис {{ pr.cat }} {{ pr.kind }} {{ pr.year|date:'Y' }}</a>
           <p>{{ pr.price }} ₽</p>
           </div>
       </div>

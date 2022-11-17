@@ -1,24 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.views.decorators.http import require_POST
-
-from .models import Сategories, Products, Account, Purchases
-
-
+from .models import Сategories, Products, Account, Purchases, Orders
 from .cart import Cart
 from .forms import CartAddPurchasesForm
-
-
-@require_POST
-def cart_add(request, purchases_id):
-    cart = Cart(request)
-    purchase = get_object_or_404(Purchases, id=purchases_id)
-    form = CartAddPurchasesForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart.add(purchase=purchase,
-                 quantity=cd['quantity'])
-    return redirect('cart:cart_detail')
 
 
 def cart_remove(request, purchases_id):
@@ -26,14 +9,6 @@ def cart_remove(request, purchases_id):
     purchase = get_object_or_404(Purchases, id=purchases_id)
     cart.remove(purchase)
     return redirect('cart:cart_detail')
-
-
-def cart_detail(request):
-    cart = Cart(request)
-    for item in cart:
-        item['update_quantity_form'] = CartAddPurchasesForm(initial={'quantity': item['quantity'],
-                                                                   'update': True})
-    return render(request, 'shop/order.html', {'cart': cart})
 
 
 def shop(request):
@@ -48,30 +23,67 @@ def show_category(request, category_slug):
     return render(request, 'shop/Shop_category.html', {'products': products, 'category': category})
 
 
-def buy(request, product_slug):
+def buy(request, product_slug, user_id):
     product = get_object_or_404(Products, slug=product_slug)
     if request.method == 'POST':
         form = CartAddPurchasesForm(request.POST)
         if form.is_valid():
-            p = Purchases()
-            p.product = product
-            p.quantity = request.POST['quantity']
-            p.size = request.POST['size']
-            p.save()
-            return redirect('home')
+            account = Account.objects.get(pk=user_id)
+            if account:
+                ords = Orders.objects.get(account_id=user_id, status=False)
+                if ords:
+                    p = Purchases()
+                    p.product = product
+                    p.quantity = request.POST['quantity']
+                    p.size = request.POST['size']
+                    p.order = ords
+                    p.save()
+                    return redirect('cart', user_id)
+                else:
+                    o = ord_creat(account)
+                    p = Purchases()
+                    p.product = product
+                    p.quantity = request.POST['quantity']
+                    p.size = request.POST['size']
+                    p.order = o
+                    p.save()
+                    return redirect('cart', user_id)
+            return redirect('singIn')
 
     form = CartAddPurchasesForm()
 
     return render(request, 'shop/Shop-buy.html', {'product': product, 'form': form})
 
 
-def buy_success(request, product):
-    p = Purchases()
-    p.product = product
-    p.quantity = request.POST['quantity']
-    p.size = request.POST['size']
-    p.save()
+def cart(request, user_id):
+    user_cart = Orders.objects.get(account_id=user_id, status=False)
+    if user_cart is None:
+        account = Account.objects.get(pk=user_id)
+        ord_creat(account)
 
-    return reverse_lazy('home')
+    purchases = Purchases.objects.filter(order_id=user_cart.pk)
+
+    total_price = sum_price_products(purchases)
+
+    return render(request, 'shop/Order.html', {'purchases': purchases, 'total_price': total_price})
 
 
+def remove_purchases(request, purchases_id, user_id):
+    p = Purchases.objects.get(pk=purchases_id)
+    p.delete()
+    return redirect('cart', user_id)
+
+
+def sum_price_products(purchases):
+    sum_price = 0
+    for pr in purchases:
+        sum_price += pr.quantity * pr.product.price
+    return sum_price
+
+
+def ord_creat(user):
+    o = Orders()
+    o.account = user
+    o.status = False
+    o.save()
+    return o
