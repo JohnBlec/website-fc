@@ -1,0 +1,21 @@
+.namekit {
+    font: small-caps bold 25px/1 sans-serif;
+    color: rgba(0, 0, 0, 0.884);
+}
+
+.price {
+    font: small-caps bold 20px/1 sans-serif;
+    color: rgba(0, 0, 0, 0.884);
+    margin-top: 20px;
+}
+
+.bttn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 20px;
+    font: small-caps bold 20px/1 sans-serif;
+}
+
+.bttn:hover {
+    background-color: rgba(255, 255, 255, 0.479);
+}

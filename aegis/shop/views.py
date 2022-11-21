@@ -1,14 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Сategories, Products, Account, Purchases, Orders
-from .cart import Cart
-from .forms import CartAddPurchasesForm
-
-
-def cart_remove(request, purchases_id):
-    cart = Cart(request)
-    purchase = get_object_or_404(Purchases, id=purchases_id)
-    cart.remove(purchase)
-    return redirect('cart:cart_detail')
+from .forms import CartAddPurchasesForm, СompletionPurchaseForm
 
 
 def shop(request):
@@ -28,10 +20,10 @@ def buy(request, product_slug, user_id):
     if request.method == 'POST':
         form = CartAddPurchasesForm(request.POST)
         if form.is_valid():
-            account = Account.objects.get(pk=user_id)
-            if account:
-                ords = Orders.objects.get(account_id=user_id, status=False)
-                if ords:
+            if Account.objects.filter(pk=user_id):
+                account = Account.objects.get(pk=user_id)
+                if Orders.objects.filter(account_id=user_id, status=False):
+                    ords = Orders.objects.get(account_id=user_id, status=False)
                     p = Purchases()
                     p.product = product
                     p.quantity = request.POST['quantity']
@@ -48,7 +40,8 @@ def buy(request, product_slug, user_id):
                     p.order = o
                     p.save()
                     return redirect('cart', user_id)
-            return redirect('singIn')
+            else:
+                return redirect('singIn')
 
     form = CartAddPurchasesForm()
 
@@ -56,16 +49,34 @@ def buy(request, product_slug, user_id):
 
 
 def cart(request, user_id):
-    user_cart = Orders.objects.get(account_id=user_id, status=False)
-    if user_cart is None:
+    error = ''
+
+    if request.method == 'POST':
+        form = СompletionPurchaseForm(request.POST)
+        if form.is_valid():
+            ords = Orders.objects.get(account_id=user_id, status=False)
+            ords.phone_number = request.POST['phone_number']
+            ords.status = True
+            ords.save()
+        else:
+            error = 'Неправильно написали номер телефона!'
+
+    if not Orders.objects.filter(account_id=user_id, status=False):
         account = Account.objects.get(pk=user_id)
         ord_creat(account)
+
+    user_cart = Orders.objects.get(account_id=user_id, status=False)
 
     purchases = Purchases.objects.filter(order_id=user_cart.pk)
 
     total_price = sum_price_products(purchases)
 
-    return render(request, 'shop/Order.html', {'purchases': purchases, 'total_price': total_price})
+    form = СompletionPurchaseForm()
+
+    return render(request, 'shop/Order.html', {'purchases': purchases,
+                                               'total_price': total_price,
+                                               'form': form,
+                                               'error': error})
 
 
 def remove_purchases(request, purchases_id, user_id):
