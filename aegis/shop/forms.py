@@ -33,5 +33,5 @@ class СompletionPurchaseForm(forms.ModelForm):
 
         widgets = {
             "phone_number": forms.TextInput(attrs={'class': 'form-num justify-content-start',
-                                                   'placeholder': '+7 (ххх) ххх хх хх'})
+                                                   'placeholder': '+79998887766'})
         }

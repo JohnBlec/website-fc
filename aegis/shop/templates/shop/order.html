@@ -56,15 +56,15 @@
       {% if purchases %}
   <aside class="" style="margin-top: 50px; margin-left: auto;">
   <div class="me-md-3 pt-3 px-3 pt-md-5 px-md-5" style="background: rgba(128, 128, 128, 0.1); padding-bottom: 20px">
-      <div class="order">Итог </div>
-    <div class="d-flex justify-content-between"><div>Конечная стоимость:</div><div class="price">{{ total_price }} ₽</div></div>
+      <div class="order" style="margin-bottom: 20px">Итог </div>
+    <div class="d-flex justify-content-between"><div style="font: small-caps 15px sans-serif;">Конечная стоимость:</div><div class="price">{{ total_price }} ₽</div></div>
       <form method="post">
         {% csrf_token %}
             <div class="form-floating" style="margin-top: 20px;"> Номер телефона:
             {{ form.phone_number }}
             </div>
+          <span>{{ error }}</span>
       <button type="submit" class="btn-secondary bttn">Оформить заказ</button>
-        <span>{{ error }}</span>
       </form>
   </div>
     </aside>

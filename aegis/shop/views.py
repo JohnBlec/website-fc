@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Сategories, Products, Account, Purchases, Orders
 from .forms import CartAddPurchasesForm, СompletionPurchaseForm
+from django.utils import timezone
 
 
 def shop(request):
@@ -54,12 +55,16 @@ def cart(request, user_id):
     if request.method == 'POST':
         form = СompletionPurchaseForm(request.POST)
         if form.is_valid():
-            ords = Orders.objects.get(account_id=user_id, status=False)
-            ords.phone_number = request.POST['phone_number']
-            ords.status = True
-            ords.save()
+            o = Orders.objects.get(account_id=user_id, status=False)
+            uc = Orders.objects.get(account_id=user_id, status=False)
+            p = Purchases.objects.filter(order_id=uc.pk)
+            o.phone_number = request.POST['phone_number']
+            o.status = True
+            o.sum_price = sum_price_products(p)
+            o.dataTime = timezone.now()
+            o.save()
         else:
-            error = 'Неправильно написали номер телефона!'
+            error = 'Неверный формат!'
 
     if not Orders.objects.filter(account_id=user_id, status=False):
         account = Account.objects.get(pk=user_id)
