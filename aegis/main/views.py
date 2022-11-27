@@ -2,9 +2,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.db.models import Q
 
 from .forms import RegistrationForm, SingInForm
-from .models import Players
+from .models import Players, Matches, TablesView
 from django.views.generic import CreateView
 
 
@@ -40,9 +41,13 @@ def players(request):
     return render(request, 'main/Players.html', {'players': players})
 
 
-def match(request):
-    return render(request, 'main/Match.html')
+def matches(request):
+    matchs = Matches.objects.filter(Q(home_team__q_we=True) | Q(away_team__q_we=True)).order_by('-date')
+
+    return render(request, 'main/Match.html', {'matches': matchs})
 
 
 def table(request):
-    return render(request, 'main/Table.html')
+    table_str = TablesView.objects.all()
+
+    return render(request, 'main/Table.html', {'table_str': table_str})

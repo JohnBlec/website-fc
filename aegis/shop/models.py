@@ -76,7 +76,7 @@ class Products(models.Model):
 
 
 class Orders(models.Model):
-    phoneNumberRegex = RegexValidator(regex=r"^\+7?1?\d{8,14}$")
+    phoneNumberRegex = RegexValidator(regex=r"^((\+7|7|8)+([0-9]){10})$")
     account = models.ForeignKey('Account', on_delete=models.SET_NULL, null=True, verbose_name="Пользователь")
     dataTime = models.DateTimeField('Дата и время заказа', null=True)
     phone_number = models.CharField('Номер телефона', validators=[phoneNumberRegex], null=True, max_length=16)

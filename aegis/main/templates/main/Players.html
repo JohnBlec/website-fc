@@ -17,14 +17,14 @@
         </div>
       </div>    
     <div class="row" style="margin-top: 20px;">
-      {% for el in players %}
+      {% for pl in players %}
       <div class="col-lg-3 col-md-4 col-6 m-0 p-0" style="border: 1px solid black;">
-        {% if el.photo == NULL %}
+        {% if pl.photo == NULL %}
           <img class="img-fluid rounded mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.jpg' %}" alt="...">
         {% else %}
-        <img class="img-fluid rounded mx-auto d-block" src="{{ el.photo.url }}" alt="...">
+        <img class="img-fluid rounded mx-auto d-block" src="{{ pl.photo.url }}" alt="...">
         {% endif %}
-          <div class="background"><a class="number">{{ el.number }} </a><a class="surename">{{ el.name }}</a></div>
+          <div class="background"><a class="number">{{ pl.number }} </a><a class="surename">{{ pl.name }}</a></div>
       </div>
       {% endfor %}
   </div>

@@ -9,6 +9,6 @@ urlpatterns = [
     path('registration', Registration.as_view(), name='registration'),
     path('history', views.history, name='history'),
     path('players', views.players, name='players'),
-    path('match', views.match, name='match'),
+    path('matches', views.matches, name='matches'),
     path('table', views.table, name='table'),
 ]
