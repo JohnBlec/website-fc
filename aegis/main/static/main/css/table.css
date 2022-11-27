@@ -35,7 +35,7 @@
 }
 
 .play-off {
-    background: rgba(128, 128, 128, 0.158);
+    background: linear-gradient(90deg,#838383,rgb(240, 240, 240));
 }
 
 .headt {
@@ -44,4 +44,12 @@
 
 .tAegis {
     font-weight: bold;
+}
+
+.borderM {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    height: 10px;
+    margin: 20px 0px;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }

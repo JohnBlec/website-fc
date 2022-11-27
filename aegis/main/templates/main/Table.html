@@ -1,4 +1,5 @@
 {% extends 'main/layout.html' %}
+{% load main_tags %}
 {% load static %}
 
 {% block title %}
@@ -11,16 +12,40 @@
 
   {% block content %}
     <div class="container">
+                <h2 style="margin-top: 20px;">Таблица</h2>
+
+        {% with 0 as id_table %}
+        {% with 0 as positions %}
+        {% for ts in table_str %}
+        {% if id_table == ts.table_id %}
+        {% addpos positions as positions %}
+
+        <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+              <th scope="row">{{ positions }}</th>
+              <td>{{ ts.name }}</td>
+              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.wins }}</td>
+              <td>{{ ts.draws }}</td>
+              <td>{{ ts.loses }}</td>
+              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td>{{ ts.goal_difference }}</td>
+              <td>{{ ts.pts }}</td>
+            </tr>
+        {% else %}
+        </tbody>
+     </table>
+        <div class="borderM"></div>
+        {% appropriation ts.table_id as id_table %}
         <div>
-        <h2 style="margin-top: 20px;">Таблица</h2>
-            <img href="https://vk.com/kflmafia" class="mx-auto d-block" src="image/KFL.jpg" alt="KFL Logo" 
+            <img class="mx-auto d-block" src="{{ ts.table.tournament.photo.url }}" alt="{{ ts.table.tournament.name }}"
                 width="15%" height="15%" style="margin-top: -30px;">
-        <h4 class="text-end">2022 г.</h4>
+        <h4 class="text-end">{{ ts.table.start_date }} - {{ ts.table.end_date }}</h4>
+            <p class="text-end">Последние изменения в таблице: {{ ts.table.update_date }}</p>
         <div>
 
      <table class="table table-hover">
         <thead>
-            <tr style="background: gray;">
+            <tr style="background: rgb(211, 211, 211);">
               <th scope="col" class="headt">#</th>
               <th scope="col" class="headt">Команда</th>
               <th scope="col" class="headt">Игры</th>
@@ -29,41 +54,32 @@
               <th scope="col" class="headt">П</th>
               <th scope="col" class="headt">Мячи</th>
               <th scope="col" class="headt">РМ</th>
-              <th scope="col" class="headt">Форма</th>
               <th scope="col" class="headt">Очков</th>
             </tr>
           </thead>
+         {% addpos 0 as positions %}
           <tbody>
-          {% for ts in table_str %}
-            <tr class="play-off">
-              <th scope="row">1</th>
-              <td>ФК Взлёт</td>
-              <td>12</td>
-              <td>12</td>
-              <td>0</td>
-              <td>0</td>
-              <td>87:19</td>
-              <td>68</td>
-              <td>
-                <div>
-                    <span class="W">В</span><a class="W">В</a><a class="W">В</a><a class="W">В</a><a class="W">В</a></td>
-                </div>
-              <td>36</td>
+          <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+              <th scope="row">{{ positions }}</th>
+              <td>{{ ts.name }}</td>
+              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.wins }}</td>
+              <td>{{ ts.draws }}</td>
+              <td>{{ ts.loses }}</td>
+              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td>{{ ts.goal_difference }}</td>
+              <td>{{ ts.pts }}</td>
             </tr>
-            <tr>
-                <th scope="row">7</th>
-                <td class="tAegis">ФК «Аегис»</td>
-                <td class="tAegis">11</td>
-                <td class="tAegis">2</td>
-                <td class="tAegis">1</td>
-                <td class="tAegis">8</td>
-                <td class="tAegis">33:56</td>
-                <td class="tAegis">-23</td>
-                <td><a class="L">П</a><a class="L">П</a><a class="L">П</a><a class="D">Н</a><a class="L">П</a></td>
-                <td class="tAegis">7</td>
-            </tr>
-          </tbody>
-            {% endfor %}
+
+        {% endif %}
+         {% endfor %}
+         {% endwith %}
+         {% endwith %}
+                 </tbody>
      </table>
+            <div class="borderM"></div>
     </div>
+            </div>
+        </div>
+</div>
 {% endblock %}

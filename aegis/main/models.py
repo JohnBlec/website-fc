@@ -76,6 +76,7 @@ class Tables(models.Model):
 
 
 class TablesView(models.Model):
+    id = models.PositiveBigIntegerField(primary_key=True)
     name = models.CharField('Название команды', max_length=50)
     count_games = models.DecimalField('Игры', max_digits=2, decimal_places=0, null=True)
     wins = models.DecimalField('Победы', max_digits=2, decimal_places=0, null=True)
@@ -85,7 +86,7 @@ class TablesView(models.Model):
     goal_against = models.DecimalField('Пропущенные голы', max_digits=3, decimal_places=0, null=True)
     goal_difference = models.DecimalField('Разница мячей', max_digits=3, decimal_places=0, null=True)
     pts = models.DecimalField('Очки', max_digits=3, decimal_places=0, null=True)
-    table_id = models.PositiveBigIntegerField('Турнир', null=True)
+    table = models.ForeignKey('Tables', on_delete=models.CASCADE, null=True,)
     q_we = models.BooleanField('Наша ли команда?', default=False)
 
     class Meta:

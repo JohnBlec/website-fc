@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 
 from .forms import RegistrationForm, SingInForm
-from .models import Players, Matches, TablesView
+from .models import Players, Matches, TablesView, Tables
 from django.views.generic import CreateView
 
 
