@@ -24,7 +24,7 @@
             <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">Клуб</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item dropd" href="{% url 'players' %}">Состав команды</a></li>
-              <li><a class="dropdown-item dropd" href="#">Достижения</a></li>
+              <li><a class="dropdown-item dropd" href="{% url 'achievements' %}">Достижения</a></li>
               <li><a class="dropdown-item dropd" href="{% url 'history' %}">История</a></li>
             </ul>
           </li>
@@ -60,7 +60,7 @@
           <div class="col-md-4 d-flex align-items-center">
             <span class="mb-3 mb-md-0 text-muted">© 2022 Official website of FC Aegis</span>
           </div>
-          <a href="#" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+          <a style="cursor: pointer" id="scrollToTop" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <img src="{% static 'main/img/Aegis_Logo.png' %}" alt="Aegis Logo" width="80" height="80">
           </a>
           <ul class="nav col-md-3 justify-content-end list-unstyled d-flex">
@@ -69,6 +69,21 @@
         </footer>
       </div>
 
+  <script>
+         var scrollToTopa = document.getElementById("scrollToTop");
+          var rootElement = document.documentElement;
+
+          function scrollToTop() {
+            // Scroll to top logic
+            rootElement.scrollTo({
+            top: 0,
+            behavior: "smooth"
+            });
+          }
+          scrollToTopa.addEventListener("click", scrollToTop);
+      </script>
+
       <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+
 </body>
 </html>

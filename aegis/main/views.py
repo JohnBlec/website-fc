@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 
 from .forms import RegistrationForm, SingInForm
-from .models import Players, Matches, TablesView, Tables
+from .models import Players, Matches, TablesView
 from django.views.generic import CreateView
 
 
@@ -51,3 +51,8 @@ def table(request):
     table_str = TablesView.objects.all()
 
     return render(request, 'main/Table.html', {'table_str': table_str})
+
+
+def achievements(request):
+    table_str = TablesView.objects.filter(table_id=3)
+    return render(request, 'main/Achievements.html', {'table_str': table_str})

@@ -1,0 +1,94 @@
+{% extends 'main/layout.html' %}
+{% load main_tags %}
+{% load static %}
+
+{% block title %}
+Достижения | ФК Аегис
+{% endblock %}
+
+    {% block css %}
+    <link href="{% static 'main/css/table.css' %}" rel="stylesheet">
+    {% endblock %}
+
+  {% block content %}
+
+    <div class="container">
+
+        {% with 0 as id_table %}
+        {% with 0 as positions %}
+        {% for ts in table_str %}
+        {% if ts.table_id == id_table %}
+        {% addpos positions as positions %}
+
+        <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+              <th scope="row">{{ positions }}</th>
+              <td>{{ ts.name }}</td>
+              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.wins }}</td>
+              <td>{{ ts.draws }}</td>
+              <td>{{ ts.loses }}</td>
+              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td>{{ ts.goal_difference }}</td>
+              <td>{{ ts.pts }}</td>
+            </tr>
+        {% else %}
+        </tbody>
+     </table>
+        {% appropriation ts.table_id as id_table %}
+        <div style="margin-top: 50px">
+            <img src="{% static 'main/img/AchievementsAE/list_1.jpg' %}" style="float: right; height: 500px" />
+            <p> 2021 – 🥇 УФ ЮФЛ группа "Б"</p>
+
+ <p>Наши игроки в списке бомбардиров:</p>
+
+ <p>№2 Чечин - 25</p>
+ <p>№5 Попович - 15</p>
+ <p>№9 Павлов - 9</p>
+        </div>
+
+        <div style="margin-top: 400px">
+            <img class="mx-auto d-block" src="{{ ts.table.tournament.photo.url }}" alt="{{ ts.table.tournament.name }}"
+                width="15%" height="15%" style="margin-top: -30px;">
+        <h4 class="text-end">{{ ts.table.start_date }} - {{ ts.table.end_date }}</h4>
+        <div>
+
+     <table class="table table-hover">
+        <thead>
+            <tr style="background: rgb(211, 211, 211);">
+              <th scope="col" class="headt">#</th>
+              <th scope="col" class="headt">Команда</th>
+              <th scope="col" class="headt">Игры</th>
+              <th scope="col" class="headt">В</th>
+              <th scope="col" class="headt">Н</th>
+              <th scope="col" class="headt">П</th>
+              <th scope="col" class="headt">Мячи</th>
+              <th scope="col" class="headt">РМ</th>
+              <th scope="col" class="headt">Очков</th>
+            </tr>
+          </thead>
+         {% addpos 0 as positions %}
+          <tbody>
+          <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+              <th scope="row">{{ positions }}</th>
+              <td>{{ ts.name }}</td>
+              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.wins }}</td>
+              <td>{{ ts.draws }}</td>
+              <td>{{ ts.loses }}</td>
+              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td>{{ ts.goal_difference }}</td>
+              <td>{{ ts.pts }}</td>
+            </tr>
+
+        {% endif %}
+         {% endfor %}
+         {% endwith %}
+          {% endwith %}
+                 </tbody>
+     </table>
+            <div class="borderM"></div>
+    </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
