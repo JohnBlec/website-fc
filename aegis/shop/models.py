@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
 from .managers import CustomUserManager
 
 
@@ -23,10 +22,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    class Meta:
-        verbose_name = 'Аккаунт'
-        verbose_name_plural = 'Аккаунты'
-
 
 class Сategories(models.Model):
     name = models.CharField('Наименоние', max_length=25)
@@ -39,8 +34,6 @@ class Сategories(models.Model):
         return reverse('category', kwargs={'category_slug': self.slug})
 
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
         ordering = ['id']
 
 
@@ -52,10 +45,6 @@ class Kinds(models.Model):
 
     def get_absolute_url(self):
         return reverse('kind', kwargs={'kind_id': self.pk})
-
-    class Meta:
-        verbose_name = 'Вид'
-        verbose_name_plural = 'Виды'
 
 
 class Products(models.Model):
@@ -70,8 +59,6 @@ class Products(models.Model):
         return self.slug
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
         ordering = ['id']
 
 
@@ -86,14 +73,10 @@ class Orders(models.Model):
     def __str__(self):
         return self.account
 
-    class Meta:
-        verbose_name = 'Корзина'
-        verbose_name_plural = 'Корзины'
-
 
 class Purchases(models.Model):
-    order = models.ForeignKey('Orders', on_delete=models.SET_NULL, null=True, verbose_name="Карзина")
-    product = models.ForeignKey('Products', on_delete=models.SET_NULL, null=True, verbose_name="Товар")
+    order = models.ForeignKey('Orders', on_delete=models.CASCADE, verbose_name="Карзина")
+    product = models.ForeignKey('Products', on_delete=models.CASCADE, verbose_name="Товар")
     size = models.CharField(verbose_name="Размер", max_length=4)
     quantity = models.PositiveSmallIntegerField(verbose_name="Количество")
 
@@ -102,7 +85,3 @@ class Purchases(models.Model):
 
     def total_price(self):
         return self.quantity * self.product.price
-
-    class Meta:
-        verbose_name = 'Товар из корзины'
-        verbose_name_plural = 'Товары из корзины'
