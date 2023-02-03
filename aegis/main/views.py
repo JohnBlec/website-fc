@@ -5,12 +5,17 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 
 from .forms import RegistrationForm, SingInForm
-from .models import Players, Matches, TablesView
+from .models import Players, Matches, TablesView, News
 from django.views.generic import CreateView
 
 
 def home(request):
     return render(request, 'main/Home.html')
+
+
+def news(request):
+    news = News.objects.order_by('date_time')
+    return render(request, 'main/News.html', {'news':news})
 
 
 def history(request):

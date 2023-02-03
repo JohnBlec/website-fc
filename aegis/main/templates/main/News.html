@@ -1,0 +1,34 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Новости | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/new.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center" style="margin-top: 20px;">Новости Аегиса</h2>
+    </div>
+
+    <div class="container">
+
+    {% for n in news %}
+    <a class="nw" href="#">
+        <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative nw">         
+          <div style=" float: left;">
+              <img  height="230px"  src="{{ n.img.url }}">
+          </div>
+          <div class="col p-4 d-flex flex-column position-static">
+            <div class="mb-0 title">{{ n.title }}</div>
+            <p class="short-desc"> {{ n.short_description }} </p>
+          </div>
+        
+        </div>
+      </a>
+    {% endfor %}        
+      </div>
+{% endblock %}

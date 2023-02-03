@@ -1,7 +1,20 @@
 from django.db import models
 import locale
+from shop.models import Account
+
 locale.setlocale(locale.LC_ALL, "")
 
+
+class News(models.Model):
+    title = models.CharField('Загаловок', max_length=40)
+    short_description = models.CharField('Краткое описание', max_length=256)
+    content = models.TextField('Содержимое')
+    img = models.ImageField('Картинка к посту', upload_to='main/img/NewsAE')
+    date_time = models.DateTimeField('Дата и время публикации', null=True)
+    publisher = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, verbose_name="Копирайтер")
+
+    def __str__(self):
+        return self.title
 
 class Players(models.Model):
     name = models.CharField('Фамилия', max_length=30)

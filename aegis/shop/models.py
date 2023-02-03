@@ -75,7 +75,7 @@ class Orders(models.Model):
 
 
 class Purchases(models.Model):
-    order = models.ForeignKey('Orders', on_delete=models.CASCADE, verbose_name="Карзина")
+    order = models.ForeignKey('Orders', on_delete=models.CASCADE, verbose_name="Корзина")
     product = models.ForeignKey('Products', on_delete=models.CASCADE, verbose_name="Товар")
     size = models.CharField(verbose_name="Размер", max_length=4)
     quantity = models.PositiveSmallIntegerField(verbose_name="Количество")
