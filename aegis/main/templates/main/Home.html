@@ -7,6 +7,7 @@
 
   {% block css %}
     <link href="{% static 'main/css/home.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/new.css' %}" rel="stylesheet">
   {% endblock %}
 
   {% block content %}
@@ -53,7 +54,31 @@
       </button>
     </div>
   
-    
+    <div class="container">
+    <div class="row" style="margin-top: 20px;">
+      {% for n in news %}
+      <div class="col-lg-3 col-md-3 col-5 m-3 p-2">
+      <a class="nw" href="{% url 'news' n.slug %}">
+          <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative nw">         
+            <div style=" float: left;">
+                <img  height="230px"  src="{{ n.img.url }}">
+            </div>
+              <a class="nw" href="{% url 'news' n.slug %}">
+              
+            <div class="col p-4 d-flex flex-column position-static">
+              <div class="mb-0 title">{{ n.title }}</div>
+              <div class="d-flex justify-content-end datetime">
+                <p>{{ n.date_time }}</p>
+              </div>
+            </div>
+          </a>             
+      </a>
+    </div>
+    </div>
+      {% endfor %} 
+    </div>
+  </div>
+
     <div class="container marketing">
       <h3 class="text-center" style="margin-bottom: 50px;">Основатели Аегиса</h3>
       <div class="row">
@@ -91,6 +116,6 @@
         </a>
         </div>
       </div>
-
+    </div>   
   </main>
 {% endblock %}

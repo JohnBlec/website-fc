@@ -17,3 +17,15 @@ class RegistrationForm(UserCreationForm):
 class SingInForm(AuthenticationForm):
     username = forms.CharField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+class AddNewForm(forms.ModelForm):
+    class Meta:
+        model = News
+        fields = ['title', 'slug', 'short_description', 'content', 'img']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'slug': forms.TextInput(attrs={'class': 'form-input'}),
+            'short_description': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
+            'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+        }

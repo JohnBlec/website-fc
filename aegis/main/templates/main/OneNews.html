@@ -1,0 +1,17 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+{{ news.title }} | ФК Аегис
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+    <div style=" float: center;">
+        <img  height="230px"  src="{{ news.img.url }}">
+    </div>
+        <h2 class="text-center" style="margin-top: 20px; margin-bottom: 30px">{{ news.title }}</h2>
+    </div>
+
+{% endblock %}

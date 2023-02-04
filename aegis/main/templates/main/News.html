@@ -11,24 +11,49 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="text-center" style="margin-top: 20px;">Новости Аегиса</h2>
-    </div>
-
-    <div class="container">
+        <h2 class="text-center" style="margin-top: 20px; margin-bottom: 30px">Новости Аегиса</h2>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'add_new' %}">
+    <button class="Nbttn">Добавить новость</button>
+        </a>
+    {% endif %}
 
     {% for n in news %}
-    <a class="nw" href="#">
+    <a class="nw" href="{% url 'news' n.slug %}">
         <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative nw">         
           <div style=" float: left;">
               <img  height="230px"  src="{{ n.img.url }}">
           </div>
+            {% if request.user.is_superuser %}
+            
+           <div class="d-flex justify-content-end">
+            <a href="{% url 'del_new' n.id %}">
+            <button type="button" class="btn btn-outline-danger" style="width: 100px; ">Удалить</button>
+            </a>
+          </div>
+          <a class="nw" href="{% url 'news' n.slug %}">
+          <div class="d-flex justify-content-end datetime">
+            <p>{{ n.date_time }}</p>
+          </div>
+        <div class="col p-4 d-flex flex-column position-static" style="margin-top: -25px;">
+          <div class="mb-0 title">{{ n.title }}</div>
+          <p class="short-desc"> {{ n.short_description }} </p>
+        </div>
+
+      </a>
+            {% else %}
+            <a class="nw" href="{% url 'news' n.slug %}">
+            <div class="d-flex justify-content-end datetime">
+              <p>{{ n.date_time }}</p>
+            </div>
           <div class="col p-4 d-flex flex-column position-static">
             <div class="mb-0 title">{{ n.title }}</div>
             <p class="short-desc"> {{ n.short_description }} </p>
           </div>
-        
+        </a>             
+    </a>
+            {% endif %}
         </div>
-      </a>
-    {% endfor %}        
-      </div>
+    {% endfor %}    
+  </div>   
 {% endblock %}
