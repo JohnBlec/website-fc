@@ -19,11 +19,20 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return f'/news/{self.slug}'
+
 
 class Players(models.Model):
-    name = models.CharField('Фамилия', max_length=30)
+    first_name = models.CharField('Имя', max_length=20)
+    last_name = models.CharField('Фамилия', max_length=20)
+    slug = models.SlugField(max_length=30, unique=True, db_index=True, verbose_name="URL")
     number = models.PositiveSmallIntegerField('Игровой номер')
     photo = models.ImageField('Фото', upload_to='main/img/PlayersAE', null=True)
+    characteristic = models.TextField('Характеристика', null=True)
+    birthday = models.DateField('День рождения')
+    signed = models.DateField('Присоединился к команде')
+    out = models.DateField('Ушёл', null=True)
     link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
 
     def __str__(self):

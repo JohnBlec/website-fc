@@ -1,0 +1,32 @@
+.news-block {
+    margin-top: 50px;
+    max-width: 790px;
+    margin-left: 160px;
+}
+
+.datetime {
+    padding: 5px;
+    color: gray;
+}
+
+.title {
+    font: small-caps bold 45px/1 sans-serif;
+    color: rgba(0, 0, 0, 0.884);
+}
+
+.nw {
+    color: rgba(0, 0, 0, 0.884);
+    text-decoration:none;
+}
+
+.nw:hover {
+    transform:scale(1.02);
+    transition: 0.1s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.title_mini {
+    font: small-caps bold 25px/1 sans-serif;
+    color: rgba(0, 0, 0, 0.884);
+    text-decoration:none;
+}

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import Registration, SingIn
+from .views import Registration, SingIn, NewsUpdateView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -10,10 +10,12 @@ urlpatterns = [
     path('news', views.all_news, name='all_news'),
     path('news/<slug:news_slug>', views.news, name='news'),
     path('add_new', views.add_new, name='add_new'),
-    path('del_new/<str:id_news>', views.del_new, name='del_new'),
+    path('news/<slug:slug>/upd_new', NewsUpdateView.as_view(), name='upd_new'),
+    path('news/<str:id_news>/del_new', views.del_new, name='del_new'),
     path('history', views.history, name='history'),
     path('achievements', views.achievements, name='achievements'),
     path('players', views.players, name='players'),
+    path('players/<slug:slug_player>', views.details_player, name='details_player'),
     path('matches', views.matches, name='matches'),
     path('table', views.table, name='table'),
 ]

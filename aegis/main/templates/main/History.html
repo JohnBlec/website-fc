@@ -1,22 +1,79 @@
 {% extends 'main/layout.html' %}
+{% load static %}
 
 {% block title %}
 История основания | ФК Аегис
 {% endblock %}
 
+{% block css %}
+  <link href="{% static 'main/css/history.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        <h2 class="text-center" style="margin-top: 20px;">История</h2>
-        <p>Мы любительская команда Аегис</p>
+        <h2 class="text-center" style="margin-top: 20px; margin-bottom: 40px;">История</h2>
     </div>
 
     <div class="container">
-        <div class="myTexts">
-          Как-то собрались 5 друзей поиграть в футбол, встретили дедушку,
-          которому понравилась наша игра, и решил нас пригласить поиграть против команды.
-          Мы согласились. Мы ту команду победили и дедушка решил нас звать на постоянной основе.
-          Мы играли-играли, набирались опыта и заявились на юношеский турнир по футболу и победили его.
-          Интересно, что ждёт этой команде в будущем?
+        <div class="container">
+          <p>
+            Однажды загадочный дедушка-тренер предложил собрать свою команду, чтобы играть на Кубе против других ребят.
+            С этого началась история клуба "Аегис".
+            Пять самых близких друзей решили никогда не бросать футбол и тренироваться вместе на протяжении многих лет.
+            Команда вобрала в себя 5 человек, каждый из которых обладает уникальными навыками.
+            Наша команда никогда не стояла на месте, несмотря на расстояние между игроками.
+          </p>
+          <div class="container marketing" style="margin-top: 30px;">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 creators">
+                <a href="https://vk.com/davzakaryan">
+                <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/David.jpg' %}" width="140" height="140">   
+                </a>             
+                <details class="name-desc">
+                  <summary><h2 class="fw-normal">Давид Закарян</h2></summary>
+                  <p class="description">Способный дать сложнейший и точный пас, обладает хорошей техникой игры.</p>          
+                </details>
+              </div>
+              <div class="col-lg-4 col-md-4 creators">
+                <a href="https://vk.com/supremex3000">
+                <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Sergey.jpg' %}" width="140" height="140">
+               </a>            
+                <details class="name-desc">
+                  <summary><h2 class="fw-normal">Сергей Павлов</h2></summary>
+                  <p class="description">Обладает эктоморфной комплекцией, его конёк выносливость, дриблинг и голевое чутьё.</p>
+                </details>       
+              </div>
+              <div class="col-lg-4 col-md-4 creators">
+                <a href="https://vk.com/johnblec">
+                <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Pavel.jpg' %}" width="140" height="140">
+                </a>               
+                <details class="name-desc">
+                  <summary><h2 class="fw-normal">Павел Сафин</h2></summary>  
+                  <p class="description">Прирождённый вратарь, которому на районе нет равных.</p>
+                </details>      
+              </div>
+            </div>   
+            <div class="row">
+              <div class="col-lg-4 col-md-4 creators">
+                <a href="https://vk.com/id142459382">
+                <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Mikayel.jpg' %}" width="140" height="140">
+                </a>
+                <details class="name-desc">
+                  <summary><h2 class="fw-normal">Микаел Нуроян</h2></summary>
+                 <p class="description">Никто не в силах состязаться с ним в физической силе и разрушающей все вокруг пушкой.</p>
+                </details>
+              </div>
+              <div class="col-lg-4 col-md-4 creators">
+                <a href="https://vk.com/lensy_boy">
+                  <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Leonid.jpg' %}" width="140" height="140">
+                </a>
+                <details class="name-desc">
+                  <summary><h2 class="fw-normal">Леонид Кармашов</h2></summary>         
+                <p class="description">С его энергичностью обладает неповторимой скоростью, выносливостью и цепкостью.</p>
+                </details>
+              </div>
+            </div>
+          </div> 
         </div>
-
+      </div>
 {% endblock %}

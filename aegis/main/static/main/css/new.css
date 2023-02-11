@@ -9,6 +9,12 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
+.news-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .datetime {
     padding: 5px;
     color: gray;

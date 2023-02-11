@@ -28,7 +28,10 @@
             
            <div class="d-flex justify-content-end">
             <a href="{% url 'del_new' n.id %}">
-            <button type="button" class="btn btn-outline-danger" style="width: 100px; ">Удалить</button>
+            <button type="button" class="btn btn-outline-danger" style="width: 80px; ">Удалить</button>
+            </a>
+           <a href="{% url 'upd_new' n.slug %}">
+            <button type="button" class="btn btn-outline-success" style="width: 130px; ">Редактировать</button>
             </a>
           </div>
           <a class="nw" href="{% url 'news' n.slug %}">

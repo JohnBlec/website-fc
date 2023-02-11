@@ -54,14 +54,14 @@
       </button>
     </div>
   
-    <div class="container">
+    <div class="container" style="margin-left: 180px;">
     <div class="row" style="margin-top: 20px;">
       {% for n in news %}
-      <div class="col-lg-3 col-md-3 col-5 m-3 p-2">
-      <a class="nw" href="{% url 'news' n.slug %}">
-          <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative nw">         
+      <div class="col-lg-3 col-md-4 col-7 m-3 p-0">
+      <a href="{% url 'news' n.slug %}">
+            <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative nw">         
             <div style=" float: left;">
-                <img  height="230px"  src="{{ n.img.url }}">
+                <img  height="200px"  src="{{ n.img.url }}">
             </div>
               <a class="nw" href="{% url 'news' n.slug %}">
               
@@ -71,13 +71,13 @@
                 <p>{{ n.date_time }}</p>
               </div>
             </div>
-          </a>             
+          </a>  
+        </div>           
       </a>
-    </div>
     </div>
       {% endfor %} 
     </div>
-  </div>
+    </div>
 
     <div class="container marketing">
       <h3 class="text-center" style="margin-bottom: 50px;">Основатели Аегиса</h3>

@@ -1,0 +1,46 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Состав команды | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/dtls_plr.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-top: 20px;">   
+      <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-5">
+                  {% if plr.photo == NULL %}
+                    <img class="rounded card-img-top mb-5 mb-md-0 photo" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
+                  {% else %}
+                    <img class="rounded card-img-top mb-5 mb-md-0 photo" src="{{ plr.photo.url }}" alt="...">
+                  {% endif %}
+                    <p class="lead" style="margin-top: 10px">Дата рождения: {{ plr.birthday }}</p>
+                    <p class="lead">
+                        В команде с {{ plr.signed }} по
+                        {% if plr.out == NULL %}
+                        н.в.
+                        {% else %}
+                        {{ plr.out }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">{{ plr.first_name }} {{ plr.last_name }}</h1>
+                    <div class="fs-5 mb-5">
+                    </div>
+                    <p class="lead" style="font-size: 16px;" align="justify">
+                      {{ plr.characteristic }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>  
+</div>
+{% endblock %}
