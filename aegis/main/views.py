@@ -81,9 +81,9 @@ def details_player(request, slug_player):
     plr = Players.objects.get(slug=slug_player)
     return render(request, 'main/Details_player.html', {'plr': plr})
 
+
 def matches(request):
     matchs = Matches.objects.filter(Q(home_team__q_we=True) | Q(away_team__q_we=True)).order_by('-date')
-
     return render(request, 'main/Match.html', {'matches': matchs})
 
 
@@ -94,5 +94,4 @@ def table(request):
 
 
 def achievements(request):
-    table_str = TablesView.objects.filter(table_id=3)
-    return render(request, 'main/Achievements.html', {'table_str': table_str})
+    return render(request, 'main/Achievements.html')

@@ -56,14 +56,21 @@ class Members(models.Model):
         return self.name
 
 
+class Scoring(models.Model):
+    player = models.ForeignKey('Players', null=True, on_delete=models.SET_NULL, verbose_name="Игрок")
+    match = models.ForeignKey('Matches', on_delete=models.CASCADE, verbose_name="Матч")
+    score = models.PositiveSmallIntegerField('Кол-во голов', null=True)
+
+
 class Matches(models.Model):
+    slug = models.SlugField(unique=True, db_index=True, verbose_name="URL")
     date = models.DateField('Дата проведения матча')
     stage = models.CharField('Стадия', max_length=30)
-    table = models.ForeignKey('Tables', on_delete=models.CASCADE)
+    table_tournament = models.ForeignKey('Tables', on_delete=models.CASCADE)
     home_team = models.ForeignKey('Members', on_delete=models.CASCADE,
-                                  verbose_name="Домашняя команда", related_name='home_team')
+                                  verbose_name="Домашняя команда", related_name='Nhome_team')
     away_team = models.ForeignKey('Members', on_delete=models.CASCADE,
-                                  verbose_name="Гостевая команда", related_name='away_team')
+                                  verbose_name="Гостевая команда", related_name='Naway_team')
     home_goals = models.DecimalField('Голы домашней комадны', max_digits=3, decimal_places=0, null=True)
     away_goals = models.DecimalField('Голы домашней комадны', max_digits=3, decimal_places=0, null=True)
     link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
@@ -88,7 +95,7 @@ class Tables(models.Model):
 class TablesView(models.Model):
     id = models.PositiveBigIntegerField(primary_key=True)
     name = models.CharField('Название команды', max_length=50)
-    count_games = models.DecimalField('Игры', max_digits=2, decimal_places=0)
+    games = models.DecimalField('Игры', max_digits=2, decimal_places=0)
     wins = models.DecimalField('Победы', max_digits=2, decimal_places=0)
     draws = models.DecimalField('Ничьи', max_digits=2, decimal_places=0)
     loses = models.DecimalField('Поражения', max_digits=2, decimal_places=0)
@@ -96,9 +103,9 @@ class TablesView(models.Model):
     goal_against = models.DecimalField('Пропущенные голы', max_digits=3, decimal_places=0)
     goal_difference = models.DecimalField('Разница мячей', max_digits=3, decimal_places=0)
     pts = models.DecimalField('Очки', max_digits=3, decimal_places=0)
-    table = models.ForeignKey('Tables', on_delete=models.CASCADE)
+    table_tournament = models.ForeignKey('Tables', on_delete=models.CASCADE)
     q_we = models.BooleanField('Наша ли команда?', default=False)
 
     class Meta:
         managed = False
-        db_table = 'table_tournaments'
+        db_table = 'table_tournament'

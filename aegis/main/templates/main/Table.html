@@ -17,13 +17,13 @@
         {% with 0 as id_table %}
         {% with 0 as positions %}
         {% for ts in table_str %}
-        {% if id_table == ts.table_id %}
+        {% if id_table == ts.table_tournament_id %}
         {% addpos positions as positions %}
 
         <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
               <th scope="row">{{ positions }}</th>
               <td>{{ ts.name }}</td>
-              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.games }}</td>
               <td>{{ ts.wins }}</td>
               <td>{{ ts.draws }}</td>
               <td>{{ ts.loses }}</td>
@@ -35,12 +35,12 @@
         </tbody>
      </table>
         <div class="borderM"></div>
-        {% appropriation ts.table_id as id_table %}
+        {% appropriation ts.table_tournament_id as id_table %}
         <div>
-            <img class="mx-auto d-block" src="{{ ts.table.tournament.photo.url }}" alt="{{ ts.table.tournament.name }}"
+            <img class="mx-auto d-block" src="{{ ts.table_tournament.tournament.photo.url }}" alt="{{ ts.table_tournament.tournament.name }}"
                 width="15%" height="15%" style="margin-top: -30px;">
-        <h4 class="text-end">{{ ts.table.start_date }} - {{ ts.table.end_date }}</h4>
-            <p class="text-end">Последние изменения в таблице: {{ ts.table.update_date }}</p>
+        <h4 class="text-end">{{ ts.table_tournament.start_date }} - {{ ts.table_tournament.end_date }}</h4>
+            <p class="text-end">Последние изменения в таблице: {{ ts.table_tournament.update_date }}</p>
         <div>
 
      <table class="table table-hover">
@@ -62,7 +62,7 @@
           <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
               <th scope="row">{{ positions }}</th>
               <td>{{ ts.name }}</td>
-              <td>{{ ts.count_games }}</td>
+              <td>{{ ts.games }}</td>
               <td>{{ ts.wins }}</td>
               <td>{{ ts.draws }}</td>
               <td>{{ ts.loses }}</td>
