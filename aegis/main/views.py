@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 
 from .forms import RegistrationForm, SingInForm, AddNewForm
-from .models import Players, Matches, TablesView, News
+from .models import Players, Matches, TablesView, News, Scoring
 from django.views.generic import CreateView, UpdateView
 
 
@@ -85,6 +85,12 @@ def details_player(request, slug_player):
 def matches(request):
     matchs = Matches.objects.filter(Q(home_team__q_we=True) | Q(away_team__q_we=True)).order_by('-date')
     return render(request, 'main/Match.html', {'matches': matchs})
+
+
+def match(request, slug_match):
+    mtch = Matches.objects.get(slug=slug_match)
+    scr = Scoring.objects.filter(match_id=mtch.id)
+    return render(request, 'main/StatsMatch.html', {'mtch': mtch, 'scr': scr})
 
 
 def table(request):

@@ -17,5 +17,6 @@ urlpatterns = [
     path('players', views.players, name='players'),
     path('players/<slug:slug_player>', views.details_player, name='details_player'),
     path('matches', views.matches, name='matches'),
+    path('matches/<slug:slug_match>', views.match, name='match'),
     path('table', views.table, name='table'),
 ]

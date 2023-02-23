@@ -1,0 +1,168 @@
+.text-danger {
+    color: #FF3D3D;
+}
+  
+.label {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #6E6E6E;
+    font-weight: 700;
+    letter-spacing: 0.095em;
+    margin-bottom: 4px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.scoreboard {
+    background-color: rgba(128, 128, 128, 0.096);
+    margin-bottom: 8px;
+}
+.scoreboard__container {
+    padding: 16px;
+}
+.scoreboard__result {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scoreboard .scoreboard__result-home,
+.scoreboard .scoreboard__result-away,
+.scoreboard .scoreboard__result-separator {
+    font-size: 40px;
+}
+.scoreboard .scoreboard__result-separator {
+    margin: 0 8px;
+    color: #6E6E6E;
+}
+.scoreboard__badge {
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.scoreboard__badge img {
+    height: 100%;
+}
+.scoreboard__teams {
+    display: flex;
+    justify-content: center;
+}
+.scoreboard__team {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+.scoreboard__team--align-right {
+    flex-direction: row-reverse;
+}
+.scoreboard__team--align-right .scoreboard__name {
+    text-align: right;
+}
+.scoreboard__team--align-left .scoreboard__name {
+    text-align: left;
+}
+.scoreboard__name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;  
+    display: block;
+    width: 200px;
+}
+.scoreboard__basics {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scoreboard__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    padding: 0 16px;
+}
+.scoreboard__nav-el {
+    list-style: none;
+    border-bottom: 2px solid white;
+    padding: 20px 16px;
+    color: #6E6E6E;
+    text-decoration: none;
+    display: block;
+    line-height: 0;
+}
+.scoreboard__nav-el:hover {
+    color: #6E6E6E;
+    border-bottom: 2px solid gray;
+}
+.scoreboard__nav-el.active {
+    color: #6E6E6E;
+    border-bottom: 2px solid gray;
+}
+
+:root {
+    --primary-color: #fff; /* try #212121 also for dark mode */
+    --background-color: #212121;
+    --font: sans-serif;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .live {
+    background: var(--background-color);
+    font-family: var(--font);
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Timeline Container */
+  .timeline {
+    background: var(--primary-color);
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  /* Outer Layer with the timeline border */
+  .outer {
+    border-left: 2px solid #333;
+  }
+  
+  /* Card container */
+  .card {
+    position: relative;
+    margin: 0 0 20px 20px;
+    padding: 10px;
+    background: #33333336;
+    color: black;
+    border-radius: 8px;
+  }
+  
+  /* Information about the timeline */
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Title of the card */
+  .title {
+    color: black;
+    position: relative;
+  }
+  
+  /* Timeline dot  */
+  .title::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 999px;
+    left: -37px;
+    border: 3px solid rgb(122, 122, 122);
+  }

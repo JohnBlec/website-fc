@@ -1,0 +1,104 @@
+{% extends 'main/layout.html' %}
+{% load main_tags %}
+{% load static %}
+
+{% block title %}
+{{ mtch.home_team.name }} - {{ mtch.away_team.name }} | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/stats_match.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/players.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+
+<div class="scoreboard">
+  <div class="scoreboard__container">
+    <div class="scoreboard__basics mb-05">
+      <span class="label">
+        Конец матча
+      </span>
+      <span class="text-danger">
+   
+      </span>
+    </div>
+    <div class="scoreboard__teams">
+      <div class="scoreboard__team scoreboard__team--align-right mr-2">
+        <div class="scoreboard__badge ml-1">
+          <img src="{{ mtch.home_team.logo.url }}" alt="{{ mtch.home_team.name }}"/>
+        </div>
+        <span class="scoreboard__name">{{ mtch.home_team.name }}</span>
+      </div>
+      <div class="scoreboard__result">
+        <span class="scoreboard__result-home">{{ mtch.home_goals }}</span>
+        <span class="scoreboard__result-separator">:</span>
+        <span class="scoreboard__result-home">{{ mtch.away_goals }}</span>
+      </div>
+      <div class="scoreboard__team scoreboard__team--align-left ml-2">
+        <div class="scoreboard__badge mr-1">
+          <img src="{{ mtch.away_team.logo.url }}" alt="{{ mtch.away_team.name }}" />
+        </div>
+        <span class="scoreboard__name">{{ mtch.away_team.name }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <nav>
+    <div class="nav nav-tabs scoreboard__nav" id="nav-tab" role="tablist">
+      <a class="nav-item scoreboard__nav-el active" id="nav-live-tab" data-bs-toggle="tab" href="#nav-live" role="tab" aria-controls="nav-live" aria-selected="true">События</a>
+      <a class="nav-item scoreboard__nav-el" id="nav-stats-tab" data-bs-toggle="tab" href="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Состав</a>
+    </div>
+  </nav>
+  <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-live" role="tabpanel" aria-labelledby="nav-live-tab">
+      <div class="timeline">
+        <div class="outer">
+          <div class="card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Павлов оформляет дубль!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Чечин забивает второй гол команды!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Дебютный гол Полякова!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Мяч в сетке, благодоря удару Павлова.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
+        <div class="row" style="margin-top: 20px;">
+      {% for scr in scr %}
+
+      <div class="col-lg-3 col-md-4 col-6 m-0 p-0" style="border: 1px solid black;">
+        <a href="{% url 'details_player' scr.player.slug %}">
+        {% if scr.player.photo == NULL %}
+          <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
+        {% else %}
+        <img class="img-fluid mx-auto d-block" src="{{ scr.player.photo.url }}" alt="...">
+        {% endif %}
+          <div class="background"><a class="number">{{ scr.player.number }} </a><a class="surename">{{ scr.player.last_name }}</a></div>
+      </a>
+      </div>
+      {% endfor %}
+  </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

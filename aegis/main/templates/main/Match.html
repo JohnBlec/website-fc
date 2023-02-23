@@ -23,7 +23,7 @@
     {% if numMonth == m.get_m_y %}
     <div class="match">
         {% if m.link_vk %}
-  <a href="{{ m.link_vk }}" class="linkM">
+  <a href="{% url 'match' m.slug %}" class="linkM">
       {% else %}
     <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
       {% endif %}
@@ -46,7 +46,7 @@
     <h4 class="hMonth">{{ numMonth }}</h4>
     <div class="match">
       {% if m.link_vk %}
-  <a href="{{ m.link_vk }}" class="linkM">
+  <a href="{% url 'match' m.slug %}" class="linkM">
       {% else %}
     <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
       {% endif %}
