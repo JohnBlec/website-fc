@@ -11,7 +11,8 @@ from django.views.generic import CreateView, UpdateView
 
 def home(request):
     news = News.objects.order_by('-date_time')[:3]
-    return render(request, 'main/Home.html', {'news': news})
+    players = Players.objects.order_by('number')
+    return render(request, 'main/Home.html', {'news': news, 'plrs': players})
 
 
 def all_news(request):
