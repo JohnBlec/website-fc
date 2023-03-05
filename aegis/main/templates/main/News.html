@@ -6,7 +6,7 @@
 {% endblock %}
 
   {% block css %}
-    <link href="{% static 'main/css/new.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/news.css' %}" rel="stylesheet">
   {% endblock %}
 
 {% block content %}
@@ -22,7 +22,7 @@
     <a class="nw" href="{% url 'news' n.slug %}">
         <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative nw">         
           <div style=" float: left;">
-              <img  height="230px"  src="{{ n.img.url }}">
+              <img width="400px" height="100%"  src="{{ n.img.url }}">
           </div>
             {% if request.user.is_superuser %}
             

@@ -8,11 +8,18 @@ from .forms import RegistrationForm, SingInForm, AddNewForm
 from .models import Players, Matches, TablesView, News, Scoring
 from django.views.generic import CreateView, UpdateView
 
+from shop.models import Products
+
 
 def home(request):
     news = News.objects.order_by('-date_time')[:3]
     players = Players.objects.order_by('number')
-    return render(request, 'main/Home.html', {'news': news, 'plrs': players})
+    merch1 = Products.objects.filter(Q(cat_id=1) & Q(kind_id=1)).order_by('-year')[:1]
+    merch2 = Products.objects.filter(Q(cat_id=2) & Q(kind_id=1)).order_by('-year')[:1]
+    merch3 = Products.objects.filter(Q(cat_id=3) & Q(kind_id=1)).order_by('-year')[:1]
+    return render(request, 'main/Home.html',
+                  {'news': news, 'plrs': players,
+                   'm1': merch1, 'm2': merch2, 'm3': merch3})
 
 
 def all_news(request):

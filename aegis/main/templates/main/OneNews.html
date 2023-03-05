@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block css %}
-    <link href="{% static 'main/css/one_new.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/one_news.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/news_mini.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -24,27 +25,26 @@
     </div>
 
     <div class="text-center" style="margin-top: 20px;"><h2>Последние новости</h2></div>
-    <div class="container" style="margin-left: 160px;">   
-        <div class="row" style="margin-top: 20px; margin-left: 60px;">
+    <div class="container">   
+        <div class="row" style="margin-top: 20px;">
           {% for n in three_news %}
-          <div class="col-lg-3 col-md-4 col-7 m-3 p-0">
-          <a href="{% url 'news' n.slug %}">
-                <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative nw">         
-                <div style=" float: left;">
-                    <img  height="200px"  src="{{ n.img.url }}">
-                </div>
-                  <a class="nw" href="{% url 'news' n.slug %}">
+          <div class="col">
+            <a href="{% url 'news' n.slug %}">
+                  <div class="card shadow-sm nw-block">         
+                      <img class="rounded-1" width="100%" height="225px"  src="{{ n.img.url }}">
                   
-                <div class="col p-4 d-flex flex-column position-static">
-                  <div class="mb-0 title_mini">{{ n.title }}</div>
-                  <div class="d-flex justify-content-end datetime">
-                    <p>{{ n.date_time }}</p>
+                  <a style="text-decoration:none" href="{% url 'news' n.slug %}">
+                    
+                  <div class="card-body">
+                    <p class="card-text title-mini">{{ n.title }}</p>
+                    <div class="position-absolute bottom-0 end-0 datetime-mini">
+                      <p>{{ n.date_time }}</p>
+                    </div>
                   </div>
-                </div>
-              </a>  
-            </div>           
-          </a>
-        </div>
+                </a>  
+              </div>           
+            </a>
+          </div>
           {% endfor %} 
     </div>
     </div>

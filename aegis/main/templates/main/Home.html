@@ -7,9 +7,10 @@
 
   {% block css %}
     <link href="{% static 'main/css/home.css' %}" rel="stylesheet">
-    <link href="{% static 'main/css/new.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/news_mini.css' %}" rel="stylesheet">
     <link href="{% static 'main/css/carusel.css' %}" rel="stylesheet">
     <link href="{% static 'main/css/players.css' %}" rel="stylesheet">
+    <link href="{% static 'shop/css/shop.css' %}" rel="stylesheet">
   {% endblock %}
 
   {% block content %}
@@ -56,20 +57,19 @@
       </button>
     </div>
   
-    <div class="container" style="margin-left: 180px;">
-    <div class="row" style="margin-top: 20px;">
+    <div class="container" style="margin-bottom: 30px;">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">     
       {% for n in news %}
-      <div class="col-lg-3 col-md-4 col-7 m-3 p-0">
+      <div class="col">
       <a href="{% url 'news' n.slug %}">
-            <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative nw">         
-            <div style=" float: left;">
-                <img  height="200px"  src="{{ n.img.url }}">
-            </div>
-              <a class="nw" href="{% url 'news' n.slug %}">
+            <div class="card shadow-sm nw-block">         
+                <img class="rounded-1" width="100%" height="225px"  src="{{ n.img.url }}">
+            
+            <a style="text-decoration:none" href="{% url 'news' n.slug %}">
               
-            <div class="col p-4 d-flex flex-column position-static">
-              <div class="mb-0 title">{{ n.title }}</div>
-              <div class="d-flex justify-content-end datetime">
+            <div class="card-body">
+              <p class="card-text title-mini">{{ n.title }}</p>
+              <div class="position-absolute bottom-0 end-0 datetime-mini">
                 <p>{{ n.date_time }}</p>
               </div>
             </div>
@@ -81,43 +81,46 @@
     </div>
     </div>
 
-    <div class="container marketing border-top">
-      <h3 class="text-center" style="margin-bottom: 50px; margin-top: 20px;">Основатели Аегиса</h3>
-      <div class="row">
-        <div class="col-lg-4 col-md-4">
-          <a class="creators" href="https://vk.com/davzakaryan">
-          <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/David.jpg' %}" width="140" height="140">
-          <h2 class="fw-normal">Давид Закарян</h2>          
-        </a>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <a class="creators" href="https://vk.com/supremex3000">
-          <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Sergey.jpg' %}" width="140" height="140">
-          <h2 class="fw-normal">Сергей Павлов</h2>    
-        </a>      
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <a class="creators" href="https://vk.com/johnblec">
-          <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Pavel.jpg' %}" width="140" height="140">
-          <h2 class="fw-normal">Павел Сафин</h2>  
-        </a>        
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-4 creators">
-          <a class="creators" href="https://vk.com/id142459382">
-          <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Mikayel.jpg' %}" width="140" height="140">
-           <h2 class="fw-normal">Микаел Нуроян</h2>
-          </a>
-        </div>
-        <div class="col-lg-4 col-md-4 creators">
-          <a class="creators" href="https://vk.com/lensy_boy">
-          <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Leonid.jpg' %}" width="140" height="140">
-          <h2 class="fw-normal">Леонид Кармашов</h2>         
-        </a>
-        </div>
+  <div class="container border-top">
+      <h3 class="text-center" style="margin-bottom: 50px; margin-top: 20px;">Магазин Аегиса</h3>
+    <div class="row" style="margin-top: 20px;">
+      {% for m1 in m1 %}
+<div class="col-lg-4 col-md-4 col-6">
+<a href="{% url 'product' m1.slug user.pk %}">
+<img class="img-fluid rounded mx-auto d-block" src="{{ m1.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
+</a>
+<div style="margin: 20px 0;">
+    <a href="{% url 'product' m1.slug user.pk %}" class="namekit">ФК Аегис {{ m1.cat }} {{ m1.kind }} {{ m1.year|date:'Y'}}</a>
+  <p>{{ m1.price }} ₽</p>
+  </div>
+</div>
+{% endfor %}
+
+{% for m2 in m2 %}
+<div class="col-lg-4 col-md-4 col-6">
+  <a href="{% url 'product' m2.slug user.pk %}">
+  <img class="img-fluid rounded mx-auto d-block" src="{{ m2.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
+  </a>
+  <div style="margin: 20px 0;">
+      <a href="{% url 'product' m2.slug user.pk %}" class="namekit">ФК Аегис {{ m2.cat }} {{ m2.kind }} {{ m2.year|date:'Y'}}</a>
+    <p>{{ m2.price }} ₽</p>
+    </div>
+  </div>
+  {% endfor %}
+  {% for m3 in m3 %}
+  <div class="col-lg-4 col-md-4 col-6">
+    <a href="{% url 'product' m3.slug user.pk %}">
+    <img class="img-fluid rounded mx-auto d-block" src="{{ m3.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
+    </a>
+    <div style="margin: 20px 0;">
+        <a href="{% url 'product' m3.slug user.pk %}" class="namekit">ФК Аегис {{ m3.cat }} {{ m3.kind }} {{ m3.year|date:'Y'}}</a>
+      <p>{{ m3.price }} ₽</p>
       </div>
     </div>
+    {% endfor %}
+  </div>
+</div>
+
     <div class="container border-top">
       <h3 class="text-center"  style="margin-bottom: 50px; margin-top: 20px;">Состав команды</h3>
       <div id="container">
@@ -144,6 +147,44 @@
       </div>
     </div> 
   </main>
+
+  <div class="container marketing border-top" style="margin-top: 30px;">
+    <h3 class="text-center" style="margin-bottom: 50px; margin-top: 20px;">Основатели Аегиса</h3>
+    <div class="row">
+      <div class="col-lg-4 col-md-4">
+        <a class="creators" href="https://vk.com/davzakaryan">
+        <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/David.jpg' %}" width="140" height="140">
+        <h2 class="fw-normal">Давид Закарян</h2>          
+      </a>
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <a class="creators" href="https://vk.com/supremex3000">
+        <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Sergey.jpg' %}" width="140" height="140">
+        <h2 class="fw-normal">Сергей Павлов</h2>    
+      </a>      
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <a class="creators" href="https://vk.com/johnblec">
+        <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Pavel.jpg' %}" width="140" height="140">
+        <h2 class="fw-normal">Павел Сафин</h2>  
+      </a>        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 creators">
+        <a class="creators" href="https://vk.com/id142459382">
+        <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Mikayel.jpg' %}" width="140" height="140">
+         <h2 class="fw-normal">Микаел Нуроян</h2>
+        </a>
+      </div>
+      <div class="col-lg-4 col-md-4 creators">
+        <a class="creators" href="https://vk.com/lensy_boy">
+        <img class="bd-placeholder-img rounded-circle" src="{% static 'main/img/HomeAE/Leonid.jpg' %}" width="140" height="140">
+        <h2 class="fw-normal">Леонид Кармашов</h2>         
+      </a>
+      </div>
+    </div>
+  </div>
 
   <script>
     var container = document.getElementById('container')

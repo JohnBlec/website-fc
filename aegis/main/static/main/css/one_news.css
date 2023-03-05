@@ -24,9 +24,3 @@
     transition: 0.1s;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-
-.title_mini {
-    font: small-caps bold 25px/1 sans-serif;
-    color: rgba(0, 0, 0, 0.884);
-    text-decoration:none;
-}
