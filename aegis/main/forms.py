@@ -22,7 +22,7 @@ class SingInForm(AuthenticationForm):
 class AddNewForm(forms.ModelForm):
     class Meta:
         model = News
-        fields = ['title', 'slug', 'short_description', 'content', 'img']
+        fields = ['title', 'slug', 'short_description', 'content', 'img', 'publisher']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'slug': forms.TextInput(attrs={'class': 'form-input'}),

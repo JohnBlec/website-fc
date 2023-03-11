@@ -90,14 +90,14 @@
             <div id="slider">
               {% for scr in scr %}
               <div class="slide">           
-                <div class=" m-0 p-0" style="border: 1px solid black;">
-                  <a href="{% url 'details_player' scr.player.slug %}">
+                <a href="{% url 'details_player' scr.player.slug %}">
+                  <div class="profile-card-2">
                   {% if scr.player.photo == NULL %}
                     <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
                   {% else %}
                   <img class="img-fluid mx-auto d-block" src="{{ scr.player.photo.url }}" alt="...">
                   {% endif %}
-                    <div class="background"><a class="number">{{ scr.player.number }} </a><a class="surename">{{ scr.player.last_name }}</a></div>
+                  <div class="profile-name"> {{ scr.player.number }} {{ scr.player.last_name }}</div>
                 </a>
                 </div>               
               </div>

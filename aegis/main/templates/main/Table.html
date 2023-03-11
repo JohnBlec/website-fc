@@ -20,9 +20,10 @@
         {% if id_table == ts.table_tournament_id %}
         {% addpos positions as positions %}
 
-        <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+        <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}" style="vertical-align: middle">
               <th scope="row">{{ positions }}</th>
-              <td>{{ ts.name }}</td>
+              <td><img src="{{ ts.club.logo.url }}" style="height: 45px;"></td>
+              <td>{{ ts.club.name }}</td>
               <td>{{ ts.games }}</td>
               <td>{{ ts.wins }}</td>
               <td>{{ ts.draws }}</td>
@@ -37,7 +38,7 @@
         <div class="borderM"></div>
         {% appropriation ts.table_tournament_id as id_table %}
         <div>
-            <img class="mx-auto d-block" src="{{ ts.table_tournament.tournament.photo.url }}" alt="{{ ts.table_tournament.tournament.name }}"
+            <img class="mx-auto d-block" src="{{ ts.table_tournament.tournament.photo.url }}" alt="{{ ts.table_tournament.tournament.club_id.name }}"
                 width="15%" height="15%" style="margin-top: -30px;">
         <h4 class="text-end">{{ ts.table_tournament.start_date }} - {{ ts.table_tournament.end_date }}</h4>
             <p class="text-end">Последние изменения в таблице: {{ ts.table_tournament.update_date }}</p>
@@ -47,6 +48,7 @@
         <thead>
             <tr style="background: rgb(211, 211, 211);">
               <th scope="col" class="headt">#</th>
+              <th scope="col" class="headt"></th>
               <th scope="col" class="headt">Команда</th>
               <th scope="col" class="headt">Игры</th>
               <th scope="col" class="headt">В</th>
@@ -59,9 +61,10 @@
           </thead>
          {% addpos 0 as positions %}
           <tbody>
-          <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}">
+          <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}" style="vertical-align: middle">
               <th scope="row">{{ positions }}</th>
-              <td>{{ ts.name }}</td>
+              <td><img src="{{ ts.club.logo.url }}" style="height: 45px;"></td>
+              <td>{{ ts.club.name }}</td>
               <td>{{ ts.games }}</td>
               <td>{{ ts.wins }}</td>
               <td>{{ ts.draws }}</td>

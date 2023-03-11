@@ -129,14 +129,14 @@
             <div id="slider">
               {% for plrs in plrs %}
               <div class="slide">           
-                <div class="m-0 p-0" style="border: 1px solid black;">
-                  <a href="{% url 'details_player' plrs.slug %}">
+                <a href="{% url 'details_player' plrs.slug %}">
+                  <div class="profile-card-2">
                   {% if plrs.photo == NULL %}
                     <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
                   {% else %}
                   <img class="img-fluid mx-auto d-block" src="{{ plrs.photo.url }}" alt="...">
                   {% endif %}
-                    <div class="background"><a class="number">{{ plrs.number }} </a><a class="surename">{{ plrs.last_name }}</a></div>
+                  <div class="profile-name"> {{ plrs.number }} {{ plrs.last_name }}</div>
                 </a>
                 </div>               
               </div>

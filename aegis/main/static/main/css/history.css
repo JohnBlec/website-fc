@@ -11,6 +11,10 @@
 
   .name-desc {
     color: black;
+    -ms-user-select: none; 
+		-moz-user-select: none; 
+		-webkit-user-select: none; 
+		user-select: none;
   }
 
   .name-desc:hover {
@@ -29,6 +33,10 @@
 
   .description {
     margin-top: 10px;
+    -ms-user-select: none; 
+		-moz-user-select: none; 
+		-webkit-user-select: none; 
+		user-select: none;
   }
 
   details summary::-webkit-details-marker {

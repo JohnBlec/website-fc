@@ -18,19 +18,22 @@
       </div>    
     <div class="row" style="margin-top: 20px;">
       {% for pl in players %}
-
-      <div class="col-lg-3 col-md-4 col-6 m-0 p-0" style="border: 1px solid black;">
+      <div class="col-md-3">
         <a href="{% url 'details_player' pl.slug %}">
+      <div class="profile-card-2">
         {% if pl.photo == NULL %}
-          <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
-        {% else %}
-        <img class="img-fluid mx-auto d-block" src="{{ pl.photo.url }}" alt="...">
+            <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
+          {% else %}
+          <img class="img-fluid mx-auto d-block" src="{{ pl.photo.url }}" alt="...">
         {% endif %}
-          <div class="background"><a class="number">{{ pl.number }} </a><a class="surename">{{ pl.last_name }}</a></div>
+          <div class="profile-name"> {{ pl.number }} {{ pl.last_name }}</div>
+      </div>
       </a>
       </div>
       {% endfor %}
   </div>
 </div>  
 </div>
+
+
 {% endblock %}

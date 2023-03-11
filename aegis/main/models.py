@@ -14,7 +14,7 @@ class News(models.Model):
     content = models.TextField('Содержимое')
     img = models.ImageField('Картинка к посту', upload_to='main/img/NewsAE')
     date_time = models.DateTimeField('Дата и время публикации', auto_now_add=True)
-    publisher = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, verbose_name="Копирайтер")
+    publisher = models.CharField('Копирайтер', max_length=30)
 
     def __str__(self):
         return self.title
@@ -94,7 +94,7 @@ class Tables(models.Model):
 
 class TablesView(models.Model):
     id = models.PositiveBigIntegerField(primary_key=True)
-    name = models.CharField('Название команды', max_length=50)
+    club = models.ForeignKey('Members', on_delete=models.CASCADE)
     games = models.DecimalField('Игры', max_digits=2, decimal_places=0)
     wins = models.DecimalField('Победы', max_digits=2, decimal_places=0)
     draws = models.DecimalField('Ничьи', max_digits=2, decimal_places=0)

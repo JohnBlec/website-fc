@@ -16,10 +16,11 @@
         <img class="shadow rounded mx-auto d-block"  height="500px"  src="{{ news.img.url }}">
     
     <div class="news-block">
+      <p class="publisher">Автор поста: {{ news.publisher }}</p>
         <p class="datetime">{{ news.date_time }}</p> 
         
         <div class="border-top" style="margin-bottom: 20px;"></div>
-        <p style="margin-bottom: 30px;">{{ news.content }}</p>
+        <p style="white-space: pre-wrap;">{{ news.content }}</p>
     </div>
 
     </div>
