@@ -18,5 +18,6 @@ urlpatterns = [
     path('players/<slug:slug_player>', views.details_player, name='details_player'),
     path('matches', views.matches, name='matches'),
     path('matches/<slug:slug_match>', views.match, name='match'),
+    path('matches/<slug:slug_match>/live', views.live_match, name='live_match'),
     path('table', views.table, name='table'),
 ]

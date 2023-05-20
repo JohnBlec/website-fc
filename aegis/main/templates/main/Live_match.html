@@ -55,27 +55,7 @@
   <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-live" role="tabpanel" aria-labelledby="nav-live-tab">
       <div class="timeline">
-        Хотите присоединиться текстовой трансляции?<br>
-        <input id="room-name-submit" type="button" value="Присоединиться"><br>
-        <div class="outer">
-          {% for ev in mtch_vt %}
-            {% if ev.type == 'goal-aeg' %}
-            <div class="card goal-card">
-              <div class="info">
-                <h3 class="title">ГОЛ!</h3>
-                <p>{{ ev.content }}</p>
-              </div>
-            </div>
-            {% endif %}
-            {% if ev.type == 'moment' %}
-            <div class="card comm-card">
-              <div class="info">
-                <h3 class="title">&#x1f4ac;</h3>
-                <p>{{ ev.content }}</p>
-              </div>
-            </div>
-            {% endif %}
-          {% endfor %}
+        <div id="chat-log" class="outer">
           <div class="card goal-card">
             <div class="info">
               <h3 class="title">ГОЛ!</h3>
@@ -115,6 +95,15 @@
           </div>
         </div>
       </div>
+      <input id="chat-message-input" type="text" size="100"><br>
+          <label for="type-event">Выбирите тип события:</label>
+            <select id="type-event">
+              <option value="goal-aeg">Гол наших</option>
+              <option value="goal-eny">Гол соперника</option>
+              <option value="sub">Замена</option>
+              <option value="moment">Момент</option>
+            </select>
+          <input id="chat-message-submit" type="button" value="Send">
     </div>
     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
       <div id="container">
@@ -227,9 +216,86 @@ function slideLeft() {
 };
 </script>
 
+<script src="{% static 'main/js/reconnecting-websocket.js' %}"></script>
 <script>
-  document.querySelector('#room-name-submit').onclick = function(e) {
-      window.location.pathname = '/matches/' + {{ mtch.slug }} + '/live';
-  };
+    var username = {{ username }};
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/match/live/');
+
+    chatSocket.onopen = function(e) {
+      fetchMessages();
+    }
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        if (data['command'] === 'events') {
+          for (let i=0; i<data['events'].length; i++) {
+            createMessage(data['events'][i]);
+          }
+        } else if (data['command'] === 'new_event'){
+          createMessage(data['event']);
+        }
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.getElementById('chat-message-input');
+        var event = messageInputDom.value;
+        var type_event = document.querySelector('select').value;
+        chatSocket.send(JSON.stringify({
+            'command': 'new_event',
+            'event': event,
+            'from': username,
+            'type_event': type_event,
+            'match': '{{ mtch.id }}'
+        }));
+
+        messageInputDom.value = '';
+    };
+
+    function fetchMessages() {
+      chatSocket.send(JSON.stringify({'command': 'fetch_event',  'id': '{{ mtch.id }}'}));
+    }
+
+    function createMessage(data) {
+      var card = document.createElement('div');
+      var info = document.createElement('div');
+      var title = document.createElement('h3');
+      var content = document.createElement('p');
+      info.className = 'info';
+      title.className = 'title';
+      content.textContent = data.content;    
+
+      switch (data.type) {
+        case 'goal-aeg':
+          card.className = 'card goal-card';
+          title.textContent = 'Гол!'
+          break;
+        case 'moment':
+          card.className = 'card comm-card';
+          title.textContent = '💬';
+        break;
+      
+        default:
+          break;
+      }
+
+      card.appendChild(info);
+      info.appendChild(title);
+      info.appendChild(content);
+      document.querySelector('#chat-log').prepend(card);
+    }
+
 </script>
 {% endblock %}

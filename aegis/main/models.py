@@ -1,10 +1,20 @@
 import datetime
 
+from django.contrib.auth import get_user_model
 from django.db import models
 import locale
-from shop.models import Account
+
+Account = get_user_model()
 
 locale.setlocale(locale.LC_ALL, "")
+
+
+class MatchEvent(models.Model):
+    author = models.ForeignKey(Account, on_delete=models.CASCADE)
+    type = models.CharField(verbose_name="Тип события", max_length=20)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    match = models.ForeignKey('Matches', on_delete=models.CASCADE)
 
 
 class News(models.Model):
@@ -34,9 +44,6 @@ class Players(models.Model):
     signed = models.DateField('Присоединился к команде')
     out = models.DateField('Ушёл', null=True)
     link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Tournaments(models.Model):

@@ -32,6 +32,7 @@ AUTH_USER_MODEL = 'shop.Account'
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'main',
     'shop',
     'django.contrib.admin',
@@ -71,6 +72,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'aegis.wsgi.application'
+
+ASGI_APPLICATION = "aegis.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

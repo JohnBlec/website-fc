@@ -137,9 +137,24 @@
     position: relative;
     margin: 0 0 20px 20px;
     padding: 10px;
-    background: #33333336;
-    color: black;
     border-radius: 8px;
+  }
+
+  .goal-card {
+    background: #27272736;
+    color: black;
+  }
+
+  .sub-card {
+    background: white;
+    color: black;
+    border: 2px solid black;
+  }
+
+  .comm-card {
+    background: white;
+    color: black;
+    border: 2px solid black;
   }
   
   /* Information about the timeline */

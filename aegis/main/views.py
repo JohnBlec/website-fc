@@ -1,11 +1,14 @@
+import json
+
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.utils.safestring import mark_safe
 
 from .forms import RegistrationForm, SingInForm, AddNewForm
-from .models import Players, Matches, TablesView, News, Scoring
+from .models import Players, Matches, TablesView, News, Scoring, MatchEvent
 from django.views.generic import CreateView, UpdateView
 
 from shop.models import Products
@@ -98,12 +101,26 @@ def matches(request):
 def match(request, slug_match):
     mtch = Matches.objects.get(slug=slug_match)
     scr = Scoring.objects.filter(match_id=mtch.id)
-    return render(request, 'main/StatsMatch.html', {'mtch': mtch, 'scr': scr})
+    mtch_vt = MatchEvent.objects.filter(match_id=mtch.id)
+    return render(request, 'main/StatsMatch.html', {
+        'mtch': mtch,
+        'scr': scr,
+        'mtch_vt': mtch_vt,
+    })
+
+
+def live_match(request, slug_match):
+    mtch = Matches.objects.get(slug=slug_match)
+    scr = Scoring.objects.filter(match_id=mtch.id)
+    return render(request, 'main/Live_match.html', {
+        'mtch': mtch,
+        'scr': scr,
+        'username': mark_safe(json.dumps(request.user.email))
+    })
 
 
 def table(request):
     table_str = TablesView.objects.all()
-
     return render(request, 'main/Table.html', {'table_str': table_str})
 
 
