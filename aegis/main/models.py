@@ -92,6 +92,13 @@ class Matches(models.Model):
         return self.date.strftime('%a %d %b')
 
 
+class TransMatch(models.Model):
+    match = models.ForeignKey(Matches, on_delete=models.CASCADE, unique=True)
+    start = models.DateTimeField('Начало трансляции')
+    pause = models.DateTimeField('Перерыв трансляции')
+    end = models.DateTimeField('Конец трансляции')
+
+
 class Tables(models.Model):
     start_date = models.DateField('Начало турнира')
     end_date = models.DateField('Окончание турнира', null=True)

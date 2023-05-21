@@ -55,8 +55,6 @@
   <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-live" role="tabpanel" aria-labelledby="nav-live-tab">
       <div class="timeline">
-        Хотите присоединиться текстовой трансляции?<br>
-        <input id="room-name-submit" type="button" value="Присоединиться"><br>
         <div class="outer">
           {% for ev in mtch_vt %}
             {% if ev.type == 'goal-aeg' %}
@@ -225,11 +223,5 @@ function slideLeft() {
         buttons[0].classList.remove('inactive');
     }
 };
-</script>
-
-<script>
-  document.querySelector('#room-name-submit').onclick = function(e) {
-      window.location.pathname = '/matches/' + {{ mtch.slug }} + '/live';
-  };
 </script>
 {% endblock %}

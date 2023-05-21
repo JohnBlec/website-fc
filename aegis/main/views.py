@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 
 from .forms import RegistrationForm, SingInForm, AddNewForm
-from .models import Players, Matches, TablesView, News, Scoring, MatchEvent
+from .models import Players, Matches, TablesView, News, Scoring, MatchEvent, TransMatch
 from django.views.generic import CreateView, UpdateView
 
 from shop.models import Products
@@ -100,12 +100,16 @@ def matches(request):
 
 def match(request, slug_match):
     mtch = Matches.objects.get(slug=slug_match)
+    if mtch.pk == int(Matches.objects.order_by('-date')[0].pk):
+        return redirect('live_match', slug_match)
     scr = Scoring.objects.filter(match_id=mtch.id)
-    mtch_vt = MatchEvent.objects.filter(match_id=mtch.id)
+    mtch_vt = MatchEvent.objects.filter(match_id=mtch.id).order_by('-timestamp')
+    trans = TransMatch.objects.filter(match_id=mtch.id)[:1]
     return render(request, 'main/StatsMatch.html', {
         'mtch': mtch,
         'scr': scr,
         'mtch_vt': mtch_vt,
+        'trans': trans
     })
 
 

@@ -22,11 +22,9 @@
 
     {% if numMonth == m.get_m_y %}
     <div class="match">
-        {% if m.link_vk %}
+
   <a href="{% url 'match' m.slug %}" class="linkM">
-      {% else %}
-    <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      {% endif %}
+
   <div class="dateM"> {{ m.get_a_d_m }} </div>
   <div class="competition">
     <img src="{{ m.table_tournament.tournament.photo.url }}" alt="{{ m.table_tournament.tournament.name }}" width="40" height="40">
@@ -45,11 +43,9 @@
      <div class="borderM"></div>
     <h4 class="hMonth">{{ numMonth }}</h4>
     <div class="match">
-      {% if m.link_vk %}
+
   <a href="{% url 'match' m.slug %}" class="linkM">
-      {% else %}
-    <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      {% endif %}
+
   <div class="dateM"> {{ m.get_a_d_m }} </div>
   <div class="competition">
     <img src="{{ m.table_tournament.tournament.photo.url }}" alt="{{ m.table_tournament.tournament.name }}" width="40" height="40">

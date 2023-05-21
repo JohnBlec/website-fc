@@ -40,7 +40,14 @@
         <div>
             <img class="mx-auto d-block" src="{{ ts.table_tournament.tournament.photo.url }}" alt="{{ ts.table_tournament.tournament.club_id.name }}"
                 width="15%" height="15%" style="margin-top: -30px;">
-        <h4 class="text-end">{{ ts.table_tournament.start_date }} - {{ ts.table_tournament.end_date }}</h4>
+        <h4 class="text-end">
+          {{ ts.table_tournament.start_date }}
+          -
+          {% if ts.table_tournament.end_date %}
+          {{ ts.table_tournament.end_date }} </h4>
+          {% else %}
+          Н/Д</h4>
+          {% endif %}
             <p class="text-end">Последние изменения в таблице: {{ ts.table_tournament.update_date }}</p>
         <div>
 

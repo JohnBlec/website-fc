@@ -80,6 +80,7 @@
               <p>Дебютный гол Полякова!</p>
             </div>
           </div>
+          <div style="margin-left: -25px;">23</div>
           <div class="card goal-card">
             <div class="info">
               <h3 class="title">ГОЛ!</h3>
@@ -95,6 +96,11 @@
           </div>
         </div>
       </div>
+      {% if request.user.is_superuser %}
+
+      Хотите начать трансляцию?<br>
+      <input id="room-name-submit" type="button" value="Начать"><br>
+
       <input id="chat-message-input" type="text" size="100"><br>
           <label for="type-event">Выбирите тип события:</label>
             <select id="type-event">
@@ -104,6 +110,7 @@
               <option value="moment">Момент</option>
             </select>
           <input id="chat-message-submit" type="button" value="Send">
+      {% endif %}
     </div>
     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
       <div id="container">
