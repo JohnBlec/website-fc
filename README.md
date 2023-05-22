@@ -3,6 +3,7 @@ Website FC Aegic | Сourse work
 
 2023 г.
 Работа с технологией WebSocket, в частности с модулем Channals.
+Основной код проекта находится в ветке master в Branches.
 
 2022 г.
 Описании курсовой работы:
