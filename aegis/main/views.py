@@ -115,11 +115,19 @@ def match(request, slug_match):
 
 def live_match(request, slug_match):
     mtch = Matches.objects.get(slug=slug_match)
+    if not TransMatch.objects.filter(match_id=mtch.id):
+        TransMatch.objects.create(match=mtch)
     scr = Scoring.objects.filter(match_id=mtch.id)
+    trans = TransMatch.objects.get(match_id=mtch.id)
+    timer = 'false'
+    if (trans.start_1 and not trans.pause) or (trans.start_2 and not trans.end):
+        timer = 'true'
     return render(request, 'main/Live_match.html', {
         'mtch': mtch,
         'scr': scr,
-        'username': mark_safe(json.dumps(request.user.email))
+        'username': mark_safe(json.dumps(request.user.email)),
+        'trans': trans,
+        'timer': timer
     })
 
 

@@ -17,8 +17,24 @@
 <div class="scoreboard">
   <div class="scoreboard__container">
     <div class="scoreboard__basics mb-05">
-      <span class="label">
+      <span id="timebar" class="label">
+        {% if trans.end %}
         Конец матча
+        {% else %}
+        {% if trans.start_2 %}
+        
+        {% else %}
+        {% if trans.pause %}
+        Перерыв
+        {% else %}
+        {% if trans.start_1 %}
+
+        {% else %}
+        {{ mtch.date }}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
       </span>
       <span class="text-danger">
    
@@ -32,9 +48,21 @@
         <span class="scoreboard__name">{{ mtch.home_team.name }}</span>
       </div>
       <div class="scoreboard__result">
-        <span class="scoreboard__result-home">{{ mtch.home_goals }}</span>
+        <span class="scoreboard__result-home">
+          {% if mtch.home_goals is not None %}
+          {{ mtch.home_goals }}
+          {% else %}
+          -
+          {% endif %}
+        </span>
         <span class="scoreboard__result-separator">:</span>
-        <span class="scoreboard__result-home">{{ mtch.away_goals }}</span>
+        <span class="scoreboard__result-home">
+          {% if mtch.away_goals is not None %}
+          {{ mtch.away_goals }}
+          {% else %}
+          -
+          {% endif %}
+        </span>
       </div>
       <div class="scoreboard__team scoreboard__team--align-left ml-2">
         <div class="scoreboard__badge mr-1">
@@ -97,19 +125,62 @@
         </div>
       </div>
       {% if request.user.is_superuser %}
-
-      Хотите начать трансляцию?<br>
-      <input id="room-name-submit" type="button" value="Начать"><br>
-
+      {% if trans.end %}
       <input id="chat-message-input" type="text" size="100"><br>
-          <label for="type-event">Выбирите тип события:</label>
-            <select id="type-event">
-              <option value="goal-aeg">Гол наших</option>
-              <option value="goal-eny">Гол соперника</option>
-              <option value="sub">Замена</option>
-              <option value="moment">Момент</option>
-            </select>
-          <input id="chat-message-submit" type="button" value="Send">
+      <label for="type-event">Выбирите тип события:</label>
+        <select id="type-event">
+          <option value="goal-aeg">Гол наших</option>
+          <option value="goal-eny">Гол соперника</option>
+          <option value="sub">Замена</option>
+          <option value="moment">Момент</option>
+        </select>
+      <input id="chat-message-submit" type="button" value="Send">   
+      {% else %}
+      {% if trans.start_2 %}
+      Матч закончен!<br>
+      <input id="end-submit" type="button" value="Конец"><br>  
+      <input id="chat-message-input" type="text" size="100"><br>
+      <label for="type-event">Выбирите тип события:</label>
+        <select id="type-event">
+          <option value="goal-aeg">Гол наших</option>
+          <option value="goal-eny">Гол соперника</option>
+          <option value="sub">Замена</option>
+          <option value="moment">Момент</option>
+        </select>
+      <input id="chat-message-submit" type="button" value="Send">   
+      {% else %}
+      {% if trans.pause %}
+      Начать второй тайм<br>
+      <input id="start-2-submit" type="button" value="Начать"><br>  
+      <input id="chat-message-input" type="text" size="100"><br>
+      <label for="type-event">Выбирите тип события:</label>
+        <select id="type-event">
+          <option value="goal-aeg">Гол наших</option>
+          <option value="goal-eny">Гол соперника</option>
+          <option value="sub">Замена</option>
+          <option value="moment">Момент</option>
+        </select>
+      <input id="chat-message-submit" type="button" value="Send">   
+      {% else %}
+      {% if trans.start_1 %}
+      Первый тайм закончен!<br>
+      <input id="pause-submit" type="button" value="Перерыв"><br>  
+      <input id="chat-message-input" type="text" size="100"><br>
+      <label for="type-event">Выбирите тип события:</label>
+        <select id="type-event">
+          <option value="goal-aeg">Гол наших</option>
+          <option value="goal-eny">Гол соперника</option>
+          <option value="sub">Замена</option>
+          <option value="moment">Момент</option>
+        </select>
+      <input id="chat-message-submit" type="button" value="Send">   
+      {% else %}
+      Хотите начать трансляцию?<br>
+      <input id="start-1-submit" type="button" value="Начать"><br>
+      {% endif %}
+      {% endif %}
+      {% endif %}
+      {% endif %}
       {% endif %}
     </div>
     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
@@ -138,6 +209,13 @@
     </div>
   </div>
 </div>
+
+<input id="chat-message-input" type="text" style="display: none;">
+<input id="chat-message-submit" type="button" style="display: none;">
+<input id="start-1-submit" type="button" style="display: none;">
+<input id="pause-submit" type="button" style="display: none;">
+<input id="start-2-submit" type="button" style="display: none;">
+<input id="end-submit" type="button" style="display: none;">
 
 <script>
 var container = document.getElementById('container')
@@ -243,6 +321,10 @@ function slideLeft() {
           }
         } else if (data['command'] === 'new_event'){
           createMessage(data['event']);
+        } else if (data['command'] === 'refresh'){
+          refresh_time(data['time']);
+        } else if (data['command'] === 'change'){
+          location.reload();
         }
     };
 
@@ -270,6 +352,44 @@ function slideLeft() {
 
         messageInputDom.value = '';
     };
+
+    document.querySelector('#start-1-submit').onclick = function(e) {
+      var datetime = time_now();
+      chatSocket.send(JSON.stringify({
+            'command': 'start_trans',
+            'half-time': 1,
+            'start_time': datetime,
+            'match': '{{ mtch.id }}'
+      }));
+    }
+
+    document.querySelector('#pause-submit').onclick = function(e) {
+      var datetime = time_now();
+      chatSocket.send(JSON.stringify({
+            'command': 'pause',
+            'pause_time': datetime,
+            'match': '{{ mtch.id }}'
+      }));
+    }
+
+    document.querySelector('#start-2-submit').onclick = function(e) {
+      var datetime = time_now();
+      chatSocket.send(JSON.stringify({
+            'command': 'start_trans',
+            'half-time': 2,
+            'start_time': datetime,
+            'match': '{{ mtch.id }}'
+      }));
+    }
+
+    document.querySelector('#end-submit').onclick = function(e) {
+      var datetime = time_now();
+      chatSocket.send(JSON.stringify({
+            'command': 'end_trans',
+            'end_time': datetime,
+            'match': '{{ mtch.id }}'
+      }));
+    }
 
     function fetchMessages() {
       chatSocket.send(JSON.stringify({'command': 'fetch_event',  'id': '{{ mtch.id }}'}));
@@ -303,6 +423,28 @@ function slideLeft() {
       info.appendChild(content);
       document.querySelector('#chat-log').prepend(card);
     }
+
+    function refresh_time(time){
+      var bar = document.getElementById('timebar');
+      bar.textContent = time
+    }
+
+    function time_now(){
+      var date = new Date();
+      var Hour = date.getHours();
+      var Minutes = date.getMinutes();
+      var Seconds = date.getSeconds();
+      datetime = Hour+':'+Minutes+':'+Seconds;
+      return datetime;
+    }
+
+    if ({{ timer }}) {
+      setInterval(() => {
+        var datetime = time_now();
+        chatSocket.send(JSON.stringify({'command': 'refresh_time', 'match': '{{ mtch.id }}', 'now': datetime}));
+      }, 1000);
+    }
+
 
 </script>
 {% endblock %}

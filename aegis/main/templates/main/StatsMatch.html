@@ -32,9 +32,21 @@
         <span class="scoreboard__name">{{ mtch.home_team.name }}</span>
       </div>
       <div class="scoreboard__result">
-        <span class="scoreboard__result-home">{{ mtch.home_goals }}</span>
+        <span class="scoreboard__result-home">
+          {% if mtch.home_goals is not None %}
+          {{ mtch.home_goals }}
+          {% else %}
+          -
+          {% endif %}
+        </span>
         <span class="scoreboard__result-separator">:</span>
-        <span class="scoreboard__result-home">{{ mtch.away_goals }}</span>
+        <span class="scoreboard__result-home">
+          {% if mtch.away_goals is not None %}
+          {{ mtch.away_goals }}
+          {% else %}
+          -
+          {% endif %}
+        </span>
       </div>
       <div class="scoreboard__team scoreboard__team--align-left ml-2">
         <div class="scoreboard__badge mr-1">

@@ -1,9 +1,10 @@
+import datetime
 import json
 
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import MatchEvent, Matches
+from .models import MatchEvent, Matches, TransMatch
 
 Account = get_user_model()
 
@@ -34,6 +35,54 @@ class LiveConsumer(WebsocketConsumer):
         }
         return self.send_live_event(content)
 
+    def start_trans(self, data):
+        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        if data['half-time'] == 1:
+            tr_mtch.start_1 = str(data['start_time'])
+        else:
+            tr_mtch.start_2 = str(data['start_time'])
+        tr_mtch.save()
+        content = {
+            'command': 'change'
+        }
+        self.send_change_state(content)
+
+    def pause(self, data):
+        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch.pause = str(data['pause_time'])
+        tr_mtch.save()
+        content = {
+            'command': 'change'
+        }
+        self.send_change_state(content)
+
+    def end_trans(self, data):
+        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch.end = str(data['end_time'])
+        tr_mtch.save()
+        content = {
+            'command': 'change'
+        }
+        self.send_change_state(content)
+
+    def refresh_time(self, data):
+        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        a = data['now'].split(':')
+        b = []
+        if tr_mtch.start_1:
+            b = str(tr_mtch.start_1).split(':')
+        if tr_mtch.start_2:
+            b = str(tr_mtch.start_2).split(':')
+        start = datetime.timedelta(hours=int(a[0]), minutes=int(a[1]), seconds=int(a[2]))
+        now = datetime.timedelta(hours=int(b[0]), minutes=int(b[1]), seconds=int(b[2]))
+        m_s = str(start - now).split(':')
+        sub = m_s[1] + ':' + m_s[2]
+        content = {
+            'command': 'refresh',
+            'time': sub
+        }
+        self.send_refresh(content)
+
     def events_to_json(self, events):
         result = []
         for event in events:
@@ -50,7 +99,11 @@ class LiveConsumer(WebsocketConsumer):
 
     commands = {
         'fetch_event': fetch_event,
-        'new_event': new_event
+        'new_event': new_event,
+        'start_trans': start_trans,
+        'refresh_time': refresh_time,
+        'pause': pause,
+        'end_trans': end_trans
     }
 
     def connect(self):
@@ -86,3 +139,18 @@ class LiveConsumer(WebsocketConsumer):
     def line_event(self, event):
         mtch_event = event['event']
         self.send(text_data=json.dumps(mtch_event))
+
+    def send_refresh(self, time):
+        self.send(text_data=json.dumps(time))
+
+    def send_change_state(self, state):
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name, {
+                'type': 'change_state_match',
+                'state': state
+            }
+        )
+
+    def change_state_match(self, state):
+        mtch_state = state['state']
+        self.send(text_data=json.dumps(mtch_state))

@@ -17,6 +17,14 @@ class MatchEvent(models.Model):
     match = models.ForeignKey('Matches', on_delete=models.CASCADE)
 
 
+class TransMatch(models.Model):
+    match = models.OneToOneField('Matches', on_delete=models.CASCADE)
+    start_1 = models.TimeField('Начало первого тайма', null=True)
+    pause = models.TimeField('Перерыв', null=True)
+    start_2 = models.TimeField('Начало второго тайма', null=True)
+    end = models.TimeField('Конец матча', null=True)
+
+
 class News(models.Model):
     title = models.CharField('Загаловок', max_length=40)
     slug = models.SlugField(max_length=50, unique=True, db_index=True, verbose_name="URL")
@@ -90,14 +98,6 @@ class Matches(models.Model):
 
     def get_a_d_m(self):
         return self.date.strftime('%a %d %b')
-
-
-class TransMatch(models.Model):
-    match = models.ForeignKey(Matches, on_delete=models.CASCADE, unique=True)
-    start = models.DateTimeField('Начало трансляции')
-    pause = models.DateTimeField('Перерыв трансляции')
-    end = models.DateTimeField('Конец трансляции')
-
 
 class Tables(models.Model):
     start_date = models.DateField('Начало турнира')
