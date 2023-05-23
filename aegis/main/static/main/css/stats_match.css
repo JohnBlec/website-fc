@@ -102,6 +102,10 @@
     border-bottom: 2px solid gray;
 }
 
+.time {
+  margin-left: -25px;
+}
+
 :root {
     --primary-color: #fff; /* try #212121 also for dark mode */
     --background-color: #212121;
@@ -180,4 +184,68 @@
     border-radius: 999px;
     left: -37px;
     border: 3px solid rgb(122, 122, 122);
+  }
+
+  .loader-3 {
+    width: 50px;
+    height: 20px;
+    position: absolute;
+    top: 27%;
+    left: 0;
+    right: 0;
+    margin: -30px auto 0;
+    text-align: center;
+  }
+  
+  .loader-3 div {
+    background-color: #00ad09;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: loader-3 1.2s infinite ease-in-out;
+    animation: loader-3 1.2s infinite ease-in-out;
+  }
+  
+  .loader-3 .item-2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+  }
+  
+  .loader-3 .item-3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+  
+  .loader-3 .item-4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
+  
+  .loader-3 .item-5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+  }
+  
+  @-webkit-keyframes loader-3 {
+    0%,
+    40%,
+    100% {
+      -webkit-transform: scaleY(0.4)
+    }
+    20% {
+      -webkit-transform: scaleY(1.0)
+    }
+  }
+  
+  @keyframes loader-3 {
+    0%,
+    40%,
+    100% {
+      transform: scaleY(0.4);
+      -webkit-transform: scaleY(0.4);
+    }
+    20% {
+      transform: scaleY(1.0);
+      -webkit-transform: scaleY(1.0);
+    }
   }

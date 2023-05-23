@@ -13,7 +13,8 @@ class MatchEvent(models.Model):
     author = models.ForeignKey(Account, on_delete=models.CASCADE)
     type = models.CharField(verbose_name="Тип события", max_length=20)
     content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    data_time = models.DateTimeField(auto_now_add=True)
+    timestamp = models.CharField(max_length=5, null=True)
     match = models.ForeignKey('Matches', on_delete=models.CASCADE)
 
 
@@ -98,6 +99,7 @@ class Matches(models.Model):
 
     def get_a_d_m(self):
         return self.date.strftime('%a %d %b')
+
 
 class Tables(models.Model):
     start_date = models.DateField('Начало турнира')

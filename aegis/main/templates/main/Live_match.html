@@ -17,17 +17,30 @@
 <div class="scoreboard">
   <div class="scoreboard__container">
     <div class="scoreboard__basics mb-05">
-      <span id="timebar" class="label">
+      <div id="timebar" class="label">
         {% if trans.end %}
         Конец матча
         {% else %}
         {% if trans.start_2 %}
-        
+          <div class="loader-3">
+            <div class="item-1"></div>
+            <div class="item-2"></div>
+            <div class="item-3"></div>
+            <div class="item-4"></div>
+            <div class="item-5"></div>
+          </div>
         {% else %}
         {% if trans.pause %}
         Перерыв
         {% else %}
         {% if trans.start_1 %}
+          <div class="loader-3">
+            <div class="item-1"></div>
+            <div class="item-2"></div>
+            <div class="item-3"></div>
+            <div class="item-4"></div>
+            <div class="item-5"></div>
+          </div>
 
         {% else %}
         {{ mtch.date }}
@@ -35,7 +48,34 @@
         {% endif %}
         {% endif %}
         {% endif %}
-      </span>
+      </div>
+      {% if trans.end %}
+        {% else %}
+        {% if trans.start_2 %}
+          <div class="loader-3">
+            <div class="item-1"></div>
+            <div class="item-2"></div>
+            <div class="item-3"></div>
+            <div class="item-4"></div>
+            <div class="item-5"></div>
+          </div>
+        {% else %}
+        {% if trans.pause %}
+        {% else %}
+        {% if trans.start_1 %}
+          <div class="loader-3">
+            <div class="item-1"></div>
+            <div class="item-2"></div>
+            <div class="item-3"></div>
+            <div class="item-4"></div>
+            <div class="item-5"></div>
+          </div>
+
+        {% else %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
       <span class="text-danger">
    
       </span>
@@ -48,7 +88,7 @@
         <span class="scoreboard__name">{{ mtch.home_team.name }}</span>
       </div>
       <div class="scoreboard__result">
-        <span class="scoreboard__result-home">
+        <span id="home" class="scoreboard__result-home">
           {% if mtch.home_goals is not None %}
           {{ mtch.home_goals }}
           {% else %}
@@ -56,7 +96,7 @@
           {% endif %}
         </span>
         <span class="scoreboard__result-separator">:</span>
-        <span class="scoreboard__result-home">
+        <span id="away" class="scoreboard__result-home">
           {% if mtch.away_goals is not None %}
           {{ mtch.away_goals }}
           {% else %}
@@ -82,48 +122,6 @@
   </nav>
   <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-live" role="tabpanel" aria-labelledby="nav-live-tab">
-      <div class="timeline">
-        <div id="chat-log" class="outer">
-          <div class="card goal-card">
-            <div class="info">
-              <h3 class="title">ГОЛ!</h3>
-              <p>Павлов оформляет дубль!</p>
-            </div>
-          </div>
-          <div class="card goal-card">
-            <div class="info">
-              <h3 class="title">ГОЛ!</h3>
-              <p>Чечин забивает второй гол команды!</p>
-            </div>
-          </div>
-          <div class="card comm-card">
-            <div class="info">
-              <h3 class="title">&#x1f4ac;</h3>
-              <p>Сегодня Павлов показывает невероятную игру!</p>
-            </div>
-          </div>
-          <div class="card goal-card">
-            <div class="info">
-              <h3 class="title">ГОЛ!</h3>
-              <p>Дебютный гол Полякова!</p>
-            </div>
-          </div>
-          <div style="margin-left: -25px;">23</div>
-          <div class="card goal-card">
-            <div class="info">
-              <h3 class="title">ГОЛ!</h3>
-              <p>Мяч в сетке, благодоря удару Павлова.</p>
-            </div>
-          </div>
-          <div class="card sub-card">
-            <div class="info">
-              <h3 class="title">&#11136; ЗАМЕНА</h3>
-              <div style="line-height: 3em;">Сергей Павлов<img style="float: right" src="{% static 'main/img/MatchStatsAE/green-left.png' %}" height="50px"></div>
-              <div style="line-height: 3em;">Давид Закарян<img style="float: right" src="{% static 'main/img/MatchStatsAE/red-right.png' %}" height="50px"></div>
-            </div>
-          </div>
-        </div>
-      </div>
       {% if request.user.is_superuser %}
       {% if trans.end %}
       <input id="chat-message-input" type="text" size="100"><br>
@@ -182,6 +180,53 @@
       {% endif %}
       {% endif %}
       {% endif %}
+      <div class="timeline">
+        <div id="chat-log" class="outer">
+          <div class="time">40'</div>
+          <div class="card goal-card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Павлов оформляет дубль!</p>
+            </div>
+          </div>
+          <div class="time">34'</div>
+          <div class="card goal-card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Чечин забивает второй гол команды!</p>
+            </div>
+          </div>
+          <div class="time">30'</div>
+          <div class="card comm-card">
+            <div class="info">
+              <h3 class="title">&#x1f4ac;</h3>
+              <p>Сегодня Павлов показывает невероятную игру!</p>
+            </div>
+          </div>
+          <div class="time">25'</div>
+          <div class="card goal-card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Дебютный гол Полякова!</p>
+            </div>
+          </div>
+          <div class="time">23'</div>
+          <div class="card goal-card">
+            <div class="info">
+              <h3 class="title">ГОЛ!</h3>
+              <p>Мяч в сетке, благодоря удару Павлова.</p>
+            </div>
+          </div>
+          <div class="time">20'</div>
+          <div class="card sub-card">
+            <div class="info">
+              <h3 class="title">&#11136; ЗАМЕНА</h3>
+              <div style="line-height: 3em;">Сергей Павлов<img style="float: right" src="{% static 'main/img/MatchStatsAE/green-left.png' %}" height="50px"></div>
+              <div style="line-height: 3em;">Давид Закарян<img style="float: right" src="{% static 'main/img/MatchStatsAE/red-right.png' %}" height="50px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
       <div id="container">
@@ -320,6 +365,11 @@ function slideLeft() {
             createMessage(data['events'][i]);
           }
         } else if (data['command'] === 'new_event'){
+          if (data['goal'] == 'home') {
+            document.getElementById('home').innerHTML = data['goalsum'];
+          } else if (data['goal'] == 'away') {
+            document.getElementById('away').innerHTML = data['goalsum'];
+          }
           createMessage(data['event']);
         } else if (data['command'] === 'refresh'){
           refresh_time(data['time']);
@@ -339,18 +389,22 @@ function slideLeft() {
     };
 
     document.querySelector('#chat-message-submit').onclick = function(e) {
-        var messageInputDom = document.getElementById('chat-message-input');
-        var event = messageInputDom.value;
+        var event = document.getElementById('chat-message-input');
         var type_event = document.querySelector('select').value;
+        var timebar = document.getElementById('timebar').innerHTML.trim();
+        if ((timebar == "Первый тайм") | (timebar == "Перерыв") | (timebar == "Конец матча")) {
+          timebar = ' ';
+        }
         chatSocket.send(JSON.stringify({
             'command': 'new_event',
-            'event': event,
+            'event': event.value,
             'from': username,
             'type_event': type_event,
+            'timestamp': timebar,
             'match': '{{ mtch.id }}'
         }));
 
-        messageInputDom.value = '';
+        event.value = '';
     };
 
     document.querySelector('#start-1-submit').onclick = function(e) {
@@ -396,10 +450,13 @@ function slideLeft() {
     }
 
     function createMessage(data) {
+      var time = document.createElement('div');
       var card = document.createElement('div');
       var info = document.createElement('div');
       var title = document.createElement('h3');
       var content = document.createElement('p');
+      time.className = 'time';
+      time.textContent = data.timestamp;
       info.className = 'info';
       title.className = 'title';
       content.textContent = data.content;    
@@ -422,11 +479,12 @@ function slideLeft() {
       info.appendChild(title);
       info.appendChild(content);
       document.querySelector('#chat-log').prepend(card);
+      document.querySelector('#chat-log').prepend(time);
     }
 
     function refresh_time(time){
       var bar = document.getElementById('timebar');
-      bar.textContent = time
+      bar.textContent = time + '\''
     }
 
     function time_now(){
