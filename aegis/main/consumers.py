@@ -32,16 +32,19 @@ class LiveConsumer(WebsocketConsumer):
                 goalsum = mtch.home_goals
                 goal = 'home'
             else:
-                mtch.away_goals += 1
+                num = mtch.away_goals
+                mtch.away_goals = int(num) + 1
                 goalsum = mtch.away_goals
                 goal = 'away'
         if data['type_event'] == 'goal-eny':
             if mtch.home_team.q_we:
-                mtch.away_goals += 1
+                num = mtch.away_goals
+                mtch.away_goals = int(num) + 1
                 goalsum = mtch.away_goals
                 goal = 'away'
             else:
-                mtch.home_goals += 1
+                num = mtch.home_goals
+                mtch.home_goals = int(num) + 1
                 goalsum = mtch.home_goals
                 goal = 'home'
         mtch.save()
