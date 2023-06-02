@@ -35,7 +35,19 @@
     <div class="teams">
         <div>{{ m.home_team.name }} - {{ m.away_team.name }}</div>
     </div>
-    <div>{{ m.home_goals }}:{{ m.away_goals }}</div>
+    <div>
+      {% if m.home_goals is not None %}
+      {% if m.away_goals is not None %}
+      {{ m.home_goals }}
+      :
+      {{ m.away_goals }}
+      {% endif %}
+      {% else %}
+      -
+      :
+      -
+      {% endif %}
+    </div>
   </a>
   </div>
     {% else %}

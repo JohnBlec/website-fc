@@ -143,8 +143,7 @@ class LiveConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = "chat_%s" % self.room_name
+        self.room_group_name = "live"
 
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name, self.channel_name
@@ -164,16 +163,16 @@ class LiveConsumer(WebsocketConsumer):
     def send_live_event(self, event):
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name, {
-                'type': 'line_event',
+                'type': 'live_event',
                 'event': event
             }
         )
 
-    def send_event(self, mtch_event):
+    def live_event(self, event):
+        mtch_event = event['event']
         self.send(text_data=json.dumps(mtch_event))
 
-    def line_event(self, event):
-        mtch_event = event['event']
+    def send_event(self, mtch_event):
         self.send(text_data=json.dumps(mtch_event))
 
     def send_refresh(self, time):

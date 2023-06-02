@@ -107,7 +107,7 @@
 }
 
 :root {
-    --primary-color: #fff; /* try #212121 also for dark mode */
+    --primary-color: #fff;
     --background-color: #212121;
     --font: sans-serif;
   }
@@ -124,14 +124,13 @@
     justify-content: center;
   }
   
-  /* Timeline Container */
+
   .timeline {
     background: var(--primary-color);
     margin: 20px auto;
     padding: 20px;
   }
   
-  /* Outer Layer with the timeline border */
   .outer {
     border-left: 2px solid #333;
   }
@@ -144,9 +143,19 @@
     border-radius: 8px;
   }
 
-  .goal-card {
+  .goal-eny-card {
     background: #27272736;
     color: black;
+  }
+
+  .goal-aeg-card {
+    background: linear-gradient(90deg,#000000,rgba(70, 78, 146, 0.692));
+    color: white;
+  }
+
+  .goal-aeg-card .title{
+    color: white;
+    position: relative;
   }
 
   .sub-card {
@@ -161,20 +170,17 @@
     border: 2px solid black;
   }
   
-  /* Information about the timeline */
   .info {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
   
-  /* Title of the card */
   .title {
     color: black;
     position: relative;
   }
   
-  /* Timeline dot  */
   .title::before {
     content: "";
     position: absolute;
