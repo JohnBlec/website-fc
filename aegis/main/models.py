@@ -15,7 +15,7 @@ class MatchEvent(models.Model):
     content = models.TextField()
     data_time = models.DateTimeField(auto_now_add=True)
     timestamp = models.CharField(max_length=5, null=True)
-    match = models.ForeignKey('Matches', on_delete=models.CASCADE)
+    trans = models.ForeignKey('TransMatch', on_delete=models.CASCADE)
 
 
 class TransMatch(models.Model):
@@ -55,6 +55,12 @@ class Players(models.Model):
     link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
 
 
+class Scoring(models.Model):
+    player = models.ForeignKey('Players', null=True, on_delete=models.SET_NULL, verbose_name="Игрок")
+    match = models.ForeignKey('Matches', on_delete=models.CASCADE, verbose_name="Матч")
+    score = models.PositiveSmallIntegerField('Кол-во голов', default=0)
+
+
 class Tournaments(models.Model):
     name = models.CharField('Название', max_length=50)
     photo = models.ImageField('Логотип', upload_to='main/img/TournamentAE')
@@ -70,12 +76,6 @@ class Members(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Scoring(models.Model):
-    player = models.ForeignKey('Players', null=True, on_delete=models.SET_NULL, verbose_name="Игрок")
-    match = models.ForeignKey('Matches', on_delete=models.CASCADE, verbose_name="Матч")
-    score = models.PositiveSmallIntegerField('Кол-во голов', null=True)
 
 
 class Matches(models.Model):

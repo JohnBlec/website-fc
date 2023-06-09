@@ -169,6 +169,15 @@
     color: black;
     border: 2px solid black;
   }
+
+  .sub-player {
+    line-height: 3em;
+  }
+
+  .sub-img {
+    float: right;
+    max-height: 50px
+  }
   
   .info {
     display: flex;

@@ -4,7 +4,7 @@ import json
 from django.contrib.auth import get_user_model
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import MatchEvent, Matches, TransMatch
+from .models import MatchEvent, Matches, TransMatch, Scoring
 
 Account = get_user_model()
 
@@ -12,7 +12,7 @@ Account = get_user_model()
 class LiveConsumer(WebsocketConsumer):
 
     def fetch_event(self, data):
-        events = MatchEvent.objects.filter(match_id=data['id']).order_by('data_time').all()
+        events = MatchEvent.objects.filter(trans_id=data['id']).order_by('data_time').all()
         content = {
             'command': 'events',
             'events': self.events_to_json(events)
@@ -22,39 +22,47 @@ class LiveConsumer(WebsocketConsumer):
     def new_event(self, data):
         author = data['from']
         author_user = Account.objects.get(email=author)
-        mtch = Matches.objects.get(pk=data['match'])
-        goal = ' '
-        goalsum = 0
-        if data['type_event'] == 'goal-aeg':
-            if mtch.home_team.q_we:
-                num = mtch.home_goals
-                mtch.home_goals = int(num) + 1
-                goalsum = mtch.home_goals
-                goal = 'home'
-            else:
-                num = mtch.away_goals
-                mtch.away_goals = int(num) + 1
-                goalsum = mtch.away_goals
-                goal = 'away'
-        if data['type_event'] == 'goal-eny':
-            if mtch.home_team.q_we:
-                num = mtch.away_goals
-                mtch.away_goals = int(num) + 1
-                goalsum = mtch.away_goals
-                goal = 'away'
-            else:
-                num = mtch.home_goals
-                mtch.home_goals = int(num) + 1
-                goalsum = mtch.home_goals
-                goal = 'home'
-        mtch.save()
+        trans = TransMatch.objects.get(pk=data['trans'])
         event = MatchEvent.objects.create(
             author=author_user,
             content=data['event'],
             type=data['type_event'],
             timestamp=data['timestamp'],
-            match=mtch
+            trans=trans
         )
+        goal = ' '
+        goalsum = 0
+
+        if data['type_event'] == 'goal-aeg':
+            mtch = Matches.objects.get(pk=trans.match_id)
+            player = Scoring.objects.get(player_id=data['player'], match_id=mtch.id)
+            player.score += 1
+            player.save()
+            if mtch.home_team.q_we:
+                num = mtch.home_goals
+                mtch.home_goals = int(num) + 1
+                goalsum = mtch.home_goals
+                goal = 'home'
+            else:
+                num = mtch.away_goals
+                mtch.away_goals = int(num) + 1
+                goalsum = mtch.away_goals
+                goal = 'away'
+            mtch.save()
+        if data['type_event'] == 'goal-eny':
+            mtch = Matches.objects.get(pk=trans.match_id)
+            if mtch.home_team.q_we:
+                num = mtch.away_goals
+                mtch.away_goals = int(num) + 1
+                goalsum = mtch.away_goals
+                goal = 'away'
+            else:
+                num = mtch.home_goals
+                mtch.home_goals = int(num) + 1
+                goalsum = mtch.home_goals
+                goal = 'home'
+            mtch.save()
+
         content = {
             'command': 'new_event',
             'event': self.event_to_json(event),
@@ -64,10 +72,10 @@ class LiveConsumer(WebsocketConsumer):
         return self.send_live_event(content)
 
     def start_trans(self, data):
-        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch = TransMatch.objects.get(pk=data['trans'])
         if data['half-time'] == 1:
             tr_mtch.start_1 = str(data['start_time'])
-            match = Matches.objects.get(pk=data['match'])
+            match = Matches.objects.get(pk=tr_mtch.match.id)
             match.home_goals = 0
             match.away_goals = 0
             match.save()
@@ -80,7 +88,7 @@ class LiveConsumer(WebsocketConsumer):
         self.send_change_state(content)
 
     def pause(self, data):
-        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch = TransMatch.objects.get(pk=data['trans'])
         tr_mtch.pause = str(data['pause_time'])
         tr_mtch.save()
         content = {
@@ -89,7 +97,7 @@ class LiveConsumer(WebsocketConsumer):
         self.send_change_state(content)
 
     def end_trans(self, data):
-        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch = TransMatch.objects.get(pk=data['trans'])
         tr_mtch.end = str(data['end_time'])
         tr_mtch.save()
         content = {
@@ -98,7 +106,7 @@ class LiveConsumer(WebsocketConsumer):
         self.send_change_state(content)
 
     def refresh_time(self, data):
-        tr_mtch = TransMatch.objects.get(match_id=data['match'])
+        tr_mtch = TransMatch.objects.get(pk=data['trans'])
         a = data['now'].split(':')
         b = []
         if tr_mtch.start_1:
