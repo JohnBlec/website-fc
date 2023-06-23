@@ -25,3 +25,14 @@
 .form-button:hover {
     background-color: rgba(255, 255, 255, 0.479);
 }
+
+
+.form-button-mini {
+    width: 20%;
+    padding: 10px;
+    font: small-caps bold 20px/1 sans-serif;
+}
+
+.form-button-mini:hover {
+    background-color: rgba(255, 255, 255, 0.479);
+}

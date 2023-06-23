@@ -1,0 +1,48 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Заявка и голы | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/forms.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center" style="margin-top: 20px; margin-bottom: 30px">
+        Добавление игрока в заявку {{ match.home_team.name }} - {{ match.away_team.name }}
+    </h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="checkbox" id="score" name="score" style="display: none;" value="False">
+        <p>
+        <label class="form-label" for="{{ form.player.id_for_label }}">{{ form.player.label }}: </label>{{ form.player }}</p>
+        <div class="form-error">{{ form.player.errors }}</div>
+
+    <button type="submit" class="form-button-mini">Добавить</button>
+    </form>
+
+    <div style="border-top: 1px solid rgba(128, 128, 128, 0.26); margin-bottom: 20px; margin-top: 20px;"></div>
+    
+    <div class="container">
+        <h3 class="text-center" style="margin-top: 20px; margin-bottom: 30px">
+            Игроки и количество голов в матче
+        </h3>
+    <form method="post">    
+    {% csrf_token %}
+    <input type="checkbox" id="score" checked name="score" style="display: none;" value="True">
+    {% for s in scr %}
+    <p>
+        <label class="form-label">{{ s.player.first_name }} {{ s.player.last_name }}:</label>
+        <input type="number" name="goals-{{ s.pk }}" value="{{ s.score }}" required id="score" min="0" max="100">
+        <a href="{% url 'del_scoring' s.match.slug s.pk %}" style="text-decoration: none;">&#10006;</a>
+    </p>
+        {% endfor %}
+    <button type="submit" class="btn btn-outline-primary">Обновить</button>
+    </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'main/layout.html' %}
+{% load main_tags %}
+{% load static %}
+
+{% block title %}
+Результаты всех матчей | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/match.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <h2 style="margin-top: 20px; padding: 20px;">Расписание матчей (Режим редактора)</h2>
+    {% if request.user.is_superuser %}
+    <a href="{% url 'add_match' %}">
+      <button class="Mbttn">Добавить матч</button>
+    </a>
+    {% endif %} 
+  </div>
+  <div style="border-top: 1px solid rgba(128, 128, 128, 0.26);">
+
+    {% with "00" as numMonth %}
+    {% for m in matches %}
+
+    {% if numMonth == m.get_m_y %}
+    <div class="match">
+
+  <a href="{% url 'upd_match' m.slug %}" class="linkM">
+
+  <div class="dateM"> {{ m.get_a_d_m }} </div>
+  <div class="competition">
+    <img src="{{ m.table_tournament.tournament.photo.url }}" alt="{{ m.table_tournament.tournament.name }}" width="40" height="40">
+  </div>
+  <div class="stage">
+    <div class="">{{ m.stage }}</div>
+  </div>
+    <div class="teams">
+        <div>{{ m.home_team.name }} - {{ m.away_team.name }}</div>
+    </div>
+    <div>
+      {% if m.home_goals is not None %}
+      {% if m.away_goals is not None %}
+      {{ m.home_goals }}
+      :
+      {{ m.away_goals }}
+      {% endif %}
+      {% else %}
+      -
+      :
+      -
+      {% endif %}
+    </div>
+  </a>
+  </div>
+    {% else %}
+    {% appropriation m.get_m_y as numMonth %}
+     <div class="borderM"></div>
+    <h4 class="hMonth">{{ numMonth }}</h4>
+    <div class="match">
+
+  <a href="{% url 'upd_match' m.slug %}" class="linkM">
+
+  <div class="dateM"> {{ m.get_a_d_m }} </div>
+  <div class="competition">
+    <img src="{{ m.table_tournament.tournament.photo.url }}" alt="{{ m.table_tournament.tournament.name }}" width="40" height="40">
+  </div>
+  <div class="stage">
+    <div class="">{{ m.stage }}</div>
+  </div>
+    <div class="teams">
+        <div>{{ m.home_team.name }} - {{ m.away_team.name }}</div>
+    </div>
+    <div>
+      {% if m.home_goals is not None %}
+      {% if m.away_goals is not None %}
+      {{ m.home_goals }}
+      :
+      {{ m.away_goals }}
+      {% endif %}
+      {% else %}
+      -
+      :
+      -
+      {% endif %}
+    </div>
+  </a>
+  </div>
+
+    {% endif %}
+    {% endfor %}
+    {% endwith %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Внимание!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Данные матча отсутствуют!
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+{% endblock %}

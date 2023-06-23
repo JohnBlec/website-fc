@@ -16,22 +16,24 @@ def show_category(request, category_slug):
     return render(request, 'shop/Shop_category.html', {'products': products, 'category': category})
 
 
-def buy(request, product_slug, user_id):
+def buy(request, product_slug):
+    if not request.user.is_authenticated:
+        return redirect('home')
     product = get_object_or_404(Products, slug=product_slug)
     if request.method == 'POST':
         form = CartAddPurchasesForm(request.POST)
         if form.is_valid():
-            if Account.objects.filter(pk=user_id):
-                account = Account.objects.get(pk=user_id)
-                if Orders.objects.filter(account_id=user_id, status=False):
-                    ords = Orders.objects.get(account_id=user_id, status=False)
+            if Account.objects.filter(pk=request.user.pk):
+                account = Account.objects.get(pk=request.user.pk)
+                if Orders.objects.filter(account_id=request.user.pk, status=False):
+                    ords = Orders.objects.get(account_id=request.user.pk, status=False)
                     p = Purchases()
                     p.product = product
                     p.quantity = request.POST['quantity']
                     p.size = request.POST['size']
                     p.order = ords
                     p.save()
-                    return redirect('cart', user_id)
+                    return redirect('cart')
                 else:
                     o = ord_creat(account)
                     p = Purchases()
@@ -40,7 +42,7 @@ def buy(request, product_slug, user_id):
                     p.size = request.POST['size']
                     p.order = o
                     p.save()
-                    return redirect('cart', user_id)
+                    return redirect('cart')
             else:
                 return redirect('singIn')
 
@@ -49,14 +51,16 @@ def buy(request, product_slug, user_id):
     return render(request, 'shop/Shop-buy.html', {'product': product, 'form': form})
 
 
-def cart(request, user_id):
+def cart(request):
     error = ''
+    if not request.user.is_authenticated:
+        return redirect('home')
 
     if request.method == 'POST':
         form = СompletionPurchaseForm(request.POST)
         if form.is_valid():
-            o = Orders.objects.get(account_id=user_id, status=False)
-            uc = Orders.objects.get(account_id=user_id, status=False)
+            o = Orders.objects.get(account_id=request.user.pk, status=False)
+            uc = Orders.objects.get(account_id=request.user.pk, status=False)
             p = Purchases.objects.filter(order_id=uc.pk)
             o.phone_number = request.POST['phone_number']
             o.status = True
@@ -66,11 +70,11 @@ def cart(request, user_id):
         else:
             error = 'Неверный формат!'
 
-    if not Orders.objects.filter(account_id=user_id, status=False):
-        account = Account.objects.get(pk=user_id)
+    if not Orders.objects.filter(account_id=request.user.pk, status=False):
+        account = Account.objects.get(pk=request.user.pk)
         ord_creat(account)
 
-    user_cart = Orders.objects.get(account_id=user_id, status=False)
+    user_cart = Orders.objects.get(account_id=request.user.pk, status=False)
 
     purchases = Purchases.objects.filter(order_id=user_cart.pk)
 
@@ -85,9 +89,11 @@ def cart(request, user_id):
 
 
 def remove_purchases(request, purchases_id, user_id):
+    if not int(request.user.pk) == int(user_id):
+        return redirect('home')
     p = Purchases.objects.get(pk=purchases_id)
     p.delete()
-    return redirect('cart', user_id)
+    return redirect('cart')
 
 
 def sum_price_products(purchases):

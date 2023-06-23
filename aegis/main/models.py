@@ -54,11 +54,14 @@ class Players(models.Model):
     out = models.DateField('Ушёл', null=True)
     link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
 
 class Scoring(models.Model):
     player = models.ForeignKey('Players', null=True, on_delete=models.SET_NULL, verbose_name="Игрок")
     match = models.ForeignKey('Matches', on_delete=models.CASCADE, verbose_name="Матч")
-    score = models.PositiveSmallIntegerField('Кол-во голов', default=0)
+    score = models.PositiveSmallIntegerField('Кол-во голов', default=0, blank=True)
 
 
 class Tournaments(models.Model):
@@ -80,16 +83,16 @@ class Members(models.Model):
 
 class Matches(models.Model):
     slug = models.SlugField(unique=True, db_index=True, verbose_name="URL")
-    date = models.DateField('Дата проведения матча')
+    date = models.DateField('Дата матча')
     stage = models.CharField('Стадия', max_length=30)
-    table_tournament = models.ForeignKey('Tables', on_delete=models.CASCADE)
+    table_tournament = models.ForeignKey('Tables', on_delete=models.CASCADE, verbose_name="Турнир")
     home_team = models.ForeignKey('Members', on_delete=models.CASCADE,
                                   verbose_name="Домашняя команда", related_name='Nhome_team')
     away_team = models.ForeignKey('Members', on_delete=models.CASCADE,
                                   verbose_name="Гостевая команда", related_name='Naway_team')
-    home_goals = models.DecimalField('Голы домашней комадны', max_digits=3, decimal_places=0, null=True)
-    away_goals = models.DecimalField('Голы домашней комадны', max_digits=3, decimal_places=0, null=True)
-    link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
+    home_goals = models.DecimalField('Голы домашней комадны', max_digits=3, decimal_places=0, null=True, blank=True)
+    away_goals = models.DecimalField('Голы гостевой комадны', max_digits=3, decimal_places=0, null=True, blank=True)
+    link_vk = models.CharField('Ссылка на вк', max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.stage
@@ -100,12 +103,18 @@ class Matches(models.Model):
     def get_a_d_m(self):
         return self.date.strftime('%a %d %b')
 
+    def get_absolute_url(self):
+        return f'/matches/{self.slug}'
+
 
 class Tables(models.Model):
     start_date = models.DateField('Начало турнира')
     end_date = models.DateField('Окончание турнира', null=True)
     tournament = models.ForeignKey('Tournaments', on_delete=models.CASCADE, verbose_name="Турнир")
     update_date = models.DateField('Обновление данных таблицы', null=True)
+
+    def __str__(self):
+        return self.tournament.name + ' | ' + str(self.start_date)
 
 
 class TablesView(models.Model):

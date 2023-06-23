@@ -1,3 +1,11 @@
+.SMbttn {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  margin-top: 30px;
+  font: small-caps bold 20px/1 sans-serif;
+}
+
 .text-danger {
     color: #FF3D3D;
 }

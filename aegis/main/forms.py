@@ -28,3 +28,30 @@ class AddNewForm(forms.ModelForm):
             'short_description': forms.Textarea(attrs={'cols': 60, 'rows': 5}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
         }
+
+
+class MatchForm(forms.ModelForm):
+    class Meta:
+        model = Matches
+        fields = ['slug', 'date', 'stage', 'table_tournament',
+                  'home_team', 'away_team',
+                  'home_goals', 'away_goals',
+                  'link_vk']
+        widgets = {
+            'slug': forms.TextInput(attrs={'class': 'form-input'}),
+            'date': forms.DateInput(),
+            'stage': forms.TextInput(attrs={'class': 'form-input'}),
+            'link_vk': forms.TextInput(attrs={'class': 'form-input'}),
+        }
+
+
+class ScoringForm(forms.ModelForm):
+    class Meta:
+        model = Scoring
+        fields = ['player', 'score']
+
+
+class ScoreForm(forms.ModelForm):
+    class Meta:
+        model = Scoring
+        fields = ['player', 'score']

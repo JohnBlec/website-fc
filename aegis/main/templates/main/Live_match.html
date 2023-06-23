@@ -105,6 +105,9 @@
     <div class="nav nav-tabs scoreboard__nav" id="nav-tab" role="tablist">
       <a class="nav-item scoreboard__nav-el active" id="nav-live-tab" data-bs-toggle="tab" href="#nav-live" role="tab" aria-controls="nav-live" aria-selected="true">События</a>
       <a class="nav-item scoreboard__nav-el" id="nav-stats-tab" data-bs-toggle="tab" href="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Состав</a>
+      {% if request.user.is_superuser %}
+      <a class="nav-item scoreboard__nav-el" id="nav-editor-tab" data-bs-toggle="tab" href="#nav-editor" role="tab" aria-controls="nav-editor" aria-selected="false">Редактор</a>
+      {% endif %}
     </div>
   </nav>
   <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -188,19 +191,34 @@
                   <img class="img-fluid mx-auto d-block" src="{{ scr.player.photo.url }}" alt="...">
                   {% endif %}
                   <div class="profile-name"> {{ scr.player.number }} {{ scr.player.last_name }}</div>
+                </div> 
                 </a>
-                </div>               
-              </div>
+              </div>               
               {% endfor %}
+            </div>
+            <span onclick="slideLeft()" class="btn"></span>
           </div>
-          <span onclick="slideLeft()" class="btn"></span>
           {% else %}
-          Данные отсутствуют
+          <div class="text-center">Данные отсутствуют</div>
           {% endif %}
-        </div>
       </div>
     </div>
-  </div>
+      {% if request.user.is_superuser %}
+      <div class="tab-pane fade" id="nav-editor" role="tabpanel" aria-labelledby="nav-editor-tab">
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'upd_match' mtch.slug %}">
+            <button class="SMbttn">Редактировать матч</button>
+          </a>
+          <a href="{% url 'editor_scoring' mtch.slug %}">
+            <button class="SMbttn">Редактировать заявку и голы</button>
+          </a>
+          <a href="{% url 'add_match' %}">
+            <button class="SMbttn">Удалить матч</button>
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
 </div>
 
 <input id="event-input" class="form-control" type="text" style="display: none;">

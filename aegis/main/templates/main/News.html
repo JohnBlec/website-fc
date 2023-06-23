@@ -24,8 +24,7 @@
           <div style=" float: left;">
               <img width="400px" height="100%"  src="{{ n.img.url }}">
           </div>
-            {% if request.user.is_superuser %}
-            
+            {% if request.user.is_superuser %}          
            <div class="d-flex justify-content-end">
             <a href="{% url 'del_new' n.id %}">
             <button type="button" class="btn btn-outline-danger" style="width: 80px; ">Удалить</button>

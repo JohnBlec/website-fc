@@ -86,11 +86,11 @@
     <div class="row" style="margin-top: 20px;">
       {% for m1 in m1 %}
 <div class="col-lg-4 col-md-4 col-6">
-<a href="{% url 'product' m1.slug user.pk %}">
+<a href="{% url 'product' m1.slug %}">
 <img class="img-fluid rounded mx-auto d-block" src="{{ m1.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
 </a>
 <div style="margin: 20px 0;">
-    <a href="{% url 'product' m1.slug user.pk %}" class="namekit">ФК Аегис {{ m1.cat }} {{ m1.kind }} {{ m1.year|date:'Y'}}</a>
+    <a href="{% url 'product' m1.slug %}" class="namekit">ФК Аегис {{ m1.cat }} {{ m1.kind }} {{ m1.year|date:'Y'}}</a>
   <p>{{ m1.price }} ₽</p>
   </div>
 </div>
@@ -98,22 +98,22 @@
 
 {% for m2 in m2 %}
 <div class="col-lg-4 col-md-4 col-6">
-  <a href="{% url 'product' m2.slug user.pk %}">
+  <a href="{% url 'product' m2.slug %}">
   <img class="img-fluid rounded mx-auto d-block" src="{{ m2.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
   </a>
   <div style="margin: 20px 0;">
-      <a href="{% url 'product' m2.slug user.pk %}" class="namekit">ФК Аегис {{ m2.cat }} {{ m2.kind }} {{ m2.year|date:'Y'}}</a>
+      <a href="{% url 'product' m2.slug %}" class="namekit">ФК Аегис {{ m2.cat }} {{ m2.kind }} {{ m2.year|date:'Y'}}</a>
     <p>{{ m2.price }} ₽</p>
     </div>
   </div>
   {% endfor %}
   {% for m3 in m3 %}
   <div class="col-lg-4 col-md-4 col-6">
-    <a href="{% url 'product' m3.slug user.pk %}">
+    <a href="{% url 'product' m3.slug %}">
     <img class="img-fluid rounded mx-auto d-block" src="{{ m3.photo.url }}" alt="..." style="background: rgba(128, 128, 128, 0.301);">
     </a>
     <div style="margin: 20px 0;">
-        <a href="{% url 'product' m3.slug user.pk %}" class="namekit">ФК Аегис {{ m3.cat }} {{ m3.kind }} {{ m3.year|date:'Y'}}</a>
+        <a href="{% url 'product' m3.slug %}" class="namekit">ФК Аегис {{ m3.cat }} {{ m3.kind }} {{ m3.year|date:'Y'}}</a>
       <p>{{ m3.price }} ₽</p>
       </div>
     </div>

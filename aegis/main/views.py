@@ -7,11 +7,15 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
-from .forms import RegistrationForm, SingInForm, AddNewForm
+from .forms import RegistrationForm, SingInForm, AddNewForm, MatchForm, ScoringForm
 from .models import Players, Matches, TablesView, News, Scoring, MatchEvent, TransMatch
 from django.views.generic import CreateView, UpdateView
 
 from shop.models import Products
+
+
+def fail_404(request, exception):
+    return render(request, '404.html', status=404)
 
 
 def home(request):
@@ -37,6 +41,8 @@ def news(request, news_slug):
 
 
 def add_new(request):
+    if not request.user.is_superuser:
+        return redirect('home')
     if request.method == 'POST':
         form = AddNewForm(request.POST, request.FILES)
         if form.is_valid():
@@ -53,8 +59,16 @@ class NewsUpdateView(UpdateView):
     template_name = 'main/Upd_News.html'
     form_class = AddNewForm
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect('home')
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
 
 def del_new(request, id_news):
+    if not request.user.is_superuser:
+        return redirect('home')
     n = News.objects.get(pk=id_news)
     n.delete()
     return redirect('all_news')
@@ -95,7 +109,20 @@ def details_player(request, slug_player):
 
 def matches(request):
     matchs = Matches.objects.filter(Q(home_team__q_we=True) | Q(away_team__q_we=True)).order_by('-date')
-    return render(request, 'main/Match.html', {'matches': matchs})
+    return render(request, 'main/Matches.html', {'matches': matchs})
+
+
+def add_match(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('all_matches')
+    else:
+        form = MatchForm()
+    return render(request, 'main/Add_Match.html', {'form': form})
 
 
 def match(request, slug_match):
@@ -116,6 +143,60 @@ def match(request, slug_match):
         'mtch': mtch,
         'scr': scr
     })
+
+
+def all_matches(request):
+    matchs = Matches.objects.all().order_by('-date')
+    return render(request, 'main/All_Matches.html', {'matches': matchs})
+
+
+class MatchUpdateView(UpdateView):
+    model = Matches
+    template_name = 'main/Upd_Match.html'
+    form_class = MatchForm
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect('home')
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
+
+def editor_scoring(request, slug_match):
+    match = Matches.objects.get(slug=slug_match)
+    scr = Scoring.objects.filter(match_id=match.pk)
+    if request.method == "POST":
+        f = ScoringForm(request.POST)
+        print(request.POST.getlist('score'))
+        if f.is_valid():
+            plr = Players.objects.get(pk=request.POST['player'])
+            if not Scoring.objects.filter(match_id=match.pk, player_id=plr.pk):
+                Scoring.objects.create(player=plr, match=match)
+        if request.POST.getlist('score'):
+            for s in scr:
+                name = 'goals-' + str(s.pk)
+                s.score = request.POST[name]
+                s.save()
+
+    form = ScoringForm()
+
+    return render(request, 'main/Editor_Scoring.html', {'form': form, 'match': match, 'scr': scr})
+
+
+def del_scoring(request, slug_match, id_scoring):
+    if not request.user.is_superuser:
+        return redirect('home')
+    scr = Scoring.objects.get(pk=id_scoring)
+    scr.delete()
+    return redirect('editor_scoring', slug_match)
+
+
+def del_match(request, id_match):
+    if not request.user.is_superuser:
+        return redirect('home')
+    m = Matches.objects.get(pk=id_match)
+    m.delete()
+    return redirect('match')
 
 
 def live_match(request, slug_match):
