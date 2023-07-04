@@ -11,21 +11,20 @@
 
   {% block content %}
     <div class="container" style="margin-top: 20px;">
-      <div class="row">
-        <div class="text-center">
+        <div class="text-center" style="margin-top: 20px; margin-bottom: 30px">
           <h2 class="hWord">Состав команды</h2>
         </div>
-      </div>    
+        {% if request.user.is_superuser %}
+        <a href="{% url 'add_player' %}">
+          <button class="Nbttn">Добавить игрока</button>
+        </a>
+        {% endif %}
     <div class="row" style="margin-top: 20px;">
       {% for pl in players %}
       <div class="col-md-3">
         <a href="{% url 'details_player' pl.slug %}">
       <div class="profile-card-2">
-        {% if pl.photo == NULL %}
-            <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
-          {% else %}
           <img class="img-fluid mx-auto d-block" src="{{ pl.photo.url }}" alt="...">
-        {% endif %}
           <div class="profile-name"> {{ pl.number }} {{ pl.last_name }}</div>
       </div>
       </a>
@@ -33,7 +32,30 @@
       {% endfor %}
   </div>
 </div>  
+<div class="filter">
+  <div class="dropdown">
+    <input type="checkbox" id="dropdown">
+  
+    <label class="dropdown__face" for="dropdown">
+      <div class="dropdown__text text_filter">Фильтр</div>
+  
+      <div class="dropdown__arrow"></div>
+    </label>
+  
+    <ul class="dropdown__items">
+            <li><a class="dropdown-item text_filter" href="{% url 'players' %}">Текущий состав</a></li>
+            <li><a class="dropdown-item text_filter" href="{% url 'all_players' %}">Все игроки</a></li>
+          </ul>
+        </div>
 </div>
+
+<svg>
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+    <feBlend in="SourceGraphic" in2="goo" />
+  </filter>
+</svg>
 
 
 {% endblock %}

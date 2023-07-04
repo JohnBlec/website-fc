@@ -24,26 +24,6 @@
           <div style=" float: left;">
               <img width="400px" height="100%"  src="{{ n.img.url }}">
           </div>
-            {% if request.user.is_superuser %}          
-           <div class="d-flex justify-content-end">
-            <a href="{% url 'del_new' n.id %}">
-            <button type="button" class="btn btn-outline-danger" style="width: 80px; ">Удалить</button>
-            </a>
-           <a href="{% url 'upd_new' n.slug %}">
-            <button type="button" class="btn btn-outline-success" style="width: 130px; ">Редактировать</button>
-            </a>
-          </div>
-          <a class="nw" href="{% url 'news' n.slug %}">
-          <div class="d-flex justify-content-end datetime">
-            <p>{{ n.date_time }}</p>
-          </div>
-        <div class="col p-4 d-flex flex-column position-static" style="margin-top: -25px;">
-          <div class="mb-0 title">{{ n.title }}</div>
-          <p class="short-desc"> {{ n.short_description }} </p>
-        </div>
-
-      </a>
-            {% else %}
             <a class="nw" href="{% url 'news' n.slug %}">
             <div class="d-flex justify-content-end datetime">
               <p>{{ n.date_time }}</p>
@@ -54,7 +34,6 @@
           </div>
         </a>             
     </a>
-            {% endif %}
         </div>
     {% endfor %}    
   </div>   

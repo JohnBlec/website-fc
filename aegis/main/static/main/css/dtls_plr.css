@@ -2,3 +2,54 @@
     background-color: rgba(128, 128, 128, 0.171);
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
+
+.Nbttn {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+    font: small-caps bold 20px/1 sans-serif;
+}
+
+.order-card {
+    color: #000000;
+}
+
+.num {
+    background: linear-gradient(0deg,#858585,#251bad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-c-left {
+    background: linear-gradient(270deg,#ffffff,#e7e7e7);
+}
+
+.bg-c-right {
+    background: linear-gradient(90deg,#ffffff,#e7e7e7);
+}
+
+.card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+    padding: 25px;
+}
+
+.order-card i {
+    font-size: 26px;
+}
+
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+}

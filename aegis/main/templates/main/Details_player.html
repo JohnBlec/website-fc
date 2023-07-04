@@ -15,11 +15,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5">
                 <div class="col-md-5">
-                  {% if plr.photo == NULL %}
-                    <img class="rounded card-img-top mb-5 mb-md-0 photo" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
-                  {% else %}
                     <img class="rounded card-img-top mb-5 mb-md-0 photo" src="{{ plr.photo.url }}" alt="...">
-                  {% endif %}
                     <p class="lead" style="margin-top: 10px">Дата рождения: {{ plr.birthday }}</p>
                     <p class="lead">
                         В команде с {{ plr.signed }} по
@@ -29,18 +25,157 @@
                         {{ plr.out }}
                         {% endif %}
                     </p>
+                    {% if plr.characteristic > '' %}
+                    <div class="row">
+                      <div class="col-md-2 col-xl-6">
+                          <div class="card bg-c-left order-card">
+                              <div class="card-block text-center">
+                                  <h5 class="m-b-20">Выступления</h6>
+                                  <h2 class="num">
+                                    {% if agp %}
+                                    {{ agp.games }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </h2>
+                                  <p class="m-b-0" >За 2023:
+                                    <span class="num" style="font: bold 18px/1 sans-serif">
+                                    {% if tgp %}
+                                    {{ tgp.games }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-2 col-xl-6">
+                          <div class="card bg-c-right order-card">
+                              <div class="card-block text-center">
+                                  <h5 class="m-b-20">Голы</h6>
+                                  <h2 class="num">
+                                    {% if agp %}
+                                    {{ agp.goals }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </h2>
+                                  <p class="m-b-0">За 2023:
+                                    <span class="num" style="font: bold 18px/1 sans-serif">
+                                    {% if tgp %}
+                                    {{ tgp.goals }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>          
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                      {% if request.user.is_superuser %}
+                      <div class="col-md-2 col-xl-6">
+                        <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button class="Nbttn btn btn-outline-danger">Удалить</button>
+                      </a>
+                    </div>
+                    <div class="col-md-2 col-xl-6">
+                      <a href="{% url 'upd_player' plr.slug %}">
+                        <button class="Nbttn btn btn-outline-success">Редактировать</button>
+                      </a>
+                    </div>
+                      {% endif %}
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h1 class="display-5 fw-bolder">{{ plr.first_name }} {{ plr.last_name }}</h1>
                     <div class="fs-5 mb-5">
                     </div>
-                    <p class="lead" style="font-size: 16px;" align="justify">
+                    <p class="lead" style="font-size: 18px;" align="justify">
                       {{ plr.characteristic }}
                     </p>
+                    {% if plr.characteristic == '' %}
+                    <div class="row">
+                      <div class="col-md-2 col-xl-6">
+                          <div class="card bg-c-left order-card">
+                              <div class="card-block text-center">
+                                  <h5 class="m-b-20">Выступления</h6>
+                                  <h2 class="num">
+                                    {% if agp %}
+                                    {{ agp.games }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </h2>
+                                  <p class="m-b-0" >За 2023:
+                                    <span class="num" style="font: bold 18px/1 sans-serif">
+                                    {% if tgp %}
+                                    {{ tgp.games }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-2 col-xl-6">
+                          <div class="card bg-c-right order-card">
+                              <div class="card-block text-center">
+                                  <h5 class="m-b-20">Голы</h6>
+                                  <h2 class="num">
+                                    {% if agp %}
+                                    {{ agp.goals }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </h2>
+                                  <p class="m-b-0">За 2023:
+                                    <span class="num" style="font: bold 18px/1 sans-serif">
+                                    {% if tgp %}
+                                    {{ tgp.goals }}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                  </span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>          
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </section>
-</div>  
+</div> 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Внимание!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Вы точно хотите удалить игрока?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button id="del" type="button" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  document.querySelector('#del').onclick = function(e) {
+    location.replace("{% url 'del_player' plr.slug %}")
+    }
+</script>
 {% endblock %}

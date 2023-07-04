@@ -1,0 +1,52 @@
+.Mbttn {
+    width: 100%;
+    height: 60%;
+    padding: 5px;
+    margin-top: 30px;
+    font: small-caps bold 20px/1 sans-serif;
+}
+
+.player {
+    user-select: none;
+}
+
+.player:hover {
+    transform:scale(1.01);
+    transition: 0.1s;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.hMonth {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+    line-height: 34px;
+    max-width: 16%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.borderM {
+    background: linear-gradient(90deg,#000000,rgb(143, 143, 143));
+    height: 10px;
+    margin: 20px 0px;
+}
+
+.positions {
+    background: linear-gradient(0deg,#000000,#1302ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.name {
+    font-size: 20px;
+    font: bold 30px/1 sans-serif;
+    color: #322c81;
+}
+
+.num {
+    background: linear-gradient(0deg,#858585,#251bad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

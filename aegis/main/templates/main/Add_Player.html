@@ -1,0 +1,27 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Добавление игрока | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/forms.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center" style="margin-top: 20px; margin-bottom: 30px">Добавление игрока</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for f in form %}
+            <p>
+            <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+             {% endfor %}
+        <button type="submit" class="form-button">Добавить</button>
+        </form>
+    </div>
+
+{% endblock %}

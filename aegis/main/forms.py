@@ -30,6 +30,15 @@ class AddNewForm(forms.ModelForm):
         }
 
 
+class PlayerForm(forms.ModelForm):
+    class Meta:
+        model = Players
+        fields = ['slug', 'first_name', 'last_name', 'number',
+                  'characteristic', 'birthday',
+                  'signed', 'out',
+                  'link_vk', 'photo']
+
+
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Matches

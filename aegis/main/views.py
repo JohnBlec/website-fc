@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
-from .forms import RegistrationForm, SingInForm, AddNewForm, MatchForm, ScoringForm
-from .models import Players, Matches, TablesView, News, Scoring, MatchEvent, TransMatch
+from .forms import RegistrationForm, SingInForm, AddNewForm, MatchForm, ScoringForm, PlayerForm
+from .models import *
 from django.views.generic import CreateView, UpdateView
 
 from shop.models import Products
@@ -97,14 +97,61 @@ def logout_user(request):
     return redirect('home')
 
 
+def add_player(request):
+    if not request.user.is_superuser:
+        return redirect('home')
+    if request.method == 'POST':
+        form = PlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('players')
+    else:
+        form = PlayerForm()
+    return render(request, 'main/Add_Player.html', {'form': form})
+
+
 def players(request):
-    players = Players.objects.order_by('number')
-    return render(request, 'main/Players.html', {'players': players})
+    plrs = Players.objects.filter(out=None).order_by('number')
+    return render(request, 'main/Players.html', {'players': plrs})
+
+
+def all_players(request):
+    plrs = Players.objects.all().order_by('number')
+    return render(request, 'main/Players.html', {'players': plrs})
 
 
 def details_player(request, slug_player):
     plr = Players.objects.get(slug=slug_player)
-    return render(request, 'main/Details_player.html', {'plr': plr})
+    if AllGamesPlayers.objects.filter(player_id=plr.pk):
+        agp = AllGamesPlayers.objects.get(player_id=plr.pk)
+    else:
+        agp = AllGamesPlayers.objects.filter(player_id=plr.pk)
+    tb = Tables.objects.order_by('-start_date')[0]
+    if TourGamesPlayers.objects.filter(player_id=plr.pk, table_id=tb.pk):
+        tgp = TourGamesPlayers.objects.get(player_id=plr.pk, table_id=tb.pk)
+    else:
+        tgp = TourGamesPlayers.objects.filter(player_id=plr.pk, table_id=tb.pk)
+    return render(request, 'main/Details_player.html', {'plr': plr, 'agp': agp, 'tgp': tgp})
+
+
+def del_player(request, slug_player):
+    if not request.user.is_superuser:
+        return redirect('home')
+    del_plr = Players.objects.get(slug=slug_player)
+    del_plr.delete()
+    return redirect('players')
+
+
+class PlayerUpdateView(UpdateView):
+    model = Players
+    template_name = 'main/Upd_Player.html'
+    form_class = PlayerForm
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect('home')
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
 
 
 def matches(request):
@@ -191,12 +238,12 @@ def del_scoring(request, slug_match, id_scoring):
     return redirect('editor_scoring', slug_match)
 
 
-def del_match(request, id_match):
+def del_match(request, slug_match):
     if not request.user.is_superuser:
         return redirect('home')
-    m = Matches.objects.get(pk=id_match)
+    m = Matches.objects.get(slug=slug_match)
     m.delete()
-    return redirect('match')
+    return redirect('matches')
 
 
 def live_match(request, slug_match):
@@ -227,3 +274,8 @@ def table(request):
 
 def achievements(request):
     return render(request, 'main/Achievements.html')
+
+
+def stats_team(request):
+    agp = AllGamesPlayers.objects.all()
+    return render(request, 'main/StatsTeam.html', {'agp': agp})

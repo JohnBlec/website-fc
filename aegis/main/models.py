@@ -47,19 +47,22 @@ class Players(models.Model):
     last_name = models.CharField('Фамилия', max_length=20)
     slug = models.SlugField(max_length=30, unique=True, db_index=True, verbose_name="URL")
     number = models.PositiveSmallIntegerField('Игровой номер')
-    photo = models.ImageField('Фото', upload_to='main/img/PlayersAE', null=True)
-    characteristic = models.TextField('Характеристика', null=True)
+    photo = models.ImageField('Фото', upload_to='main/img/PlayersAE', default='main/img/PlayersAE/NoPhoto.png', null=True, blank=True)
+    characteristic = models.TextField('Характеристика', null=True, blank=True)
     birthday = models.DateField('День рождения')
-    signed = models.DateField('Присоединился к команде')
-    out = models.DateField('Ушёл', null=True)
-    link_vk = models.CharField('Ссылка на вк', max_length=100, null=True)
+    signed = models.DateField('Присоединился')
+    out = models.DateField('Ушёл', null=True, blank=True)
+    link_vk = models.CharField('Ссылка на вк', max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
+    def get_absolute_url(self):
+        return f'/players/{self.slug}'
+
 
 class Scoring(models.Model):
-    player = models.ForeignKey('Players', null=True, on_delete=models.SET_NULL, verbose_name="Игрок")
+    player = models.ForeignKey('Players', null=True, on_delete=models.CASCADE, verbose_name="Игрок")
     match = models.ForeignKey('Matches', on_delete=models.CASCADE, verbose_name="Матч")
     score = models.PositiveSmallIntegerField('Кол-во голов', default=0, blank=True)
 
@@ -134,3 +137,32 @@ class TablesView(models.Model):
     class Meta:
         managed = False
         db_table = 'table_tournament'
+
+
+class AllGamesPlayers(models.Model):
+    id = models.PositiveBigIntegerField(primary_key=True, verbose_name='ID')
+    player = models.ForeignKey('Players', on_delete=models.CASCADE)
+    games = models.PositiveIntegerField('Игры')
+    goals = models.PositiveIntegerField('Голы')
+
+    class Meta:
+        managed = False
+        db_table = 'all_games_players'
+
+    def get_goal_per_game(self):
+        return '{:.2f}'.format(self.goals / self.games)
+
+
+class TourGamesPlayers(models.Model):
+    id = models.PositiveBigIntegerField(primary_key=True, verbose_name='ID')
+    player = models.ForeignKey('Players', on_delete=models.CASCADE)
+    table = models.ForeignKey('Tables', on_delete=models.CASCADE)
+    games = models.PositiveIntegerField('Игры')
+    goals = models.PositiveIntegerField('Голы')
+
+    class Meta:
+        managed = False
+        db_table = 'tour_games_players'
+
+    def get_goal_per_game(self):
+        return '{:.2f}'.format(self.goals / self.games)

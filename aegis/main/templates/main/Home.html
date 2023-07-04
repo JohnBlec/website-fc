@@ -131,11 +131,7 @@
               <div class="slide">           
                 <a href="{% url 'details_player' plrs.slug %}">
                   <div class="profile-card-2">
-                  {% if plrs.photo == NULL %}
-                    <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
-                  {% else %}
-                  <img class="img-fluid mx-auto d-block" src="{{ plrs.photo.url }}" alt="...">
-                  {% endif %}
+                    <img class="img-fluid mx-auto d-block" src="{{ plrs.photo.url }}" alt="...">
                   <div class="profile-name"> {{ plrs.number }} {{ plrs.last_name }}</div>
                 </a>
                 </div>               

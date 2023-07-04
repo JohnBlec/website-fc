@@ -1,0 +1,51 @@
+{% extends 'main/layout.html' %}
+{% load main_tags %}
+{% load static %}
+
+{% block title %}
+Статистика команды | ФК Аегис
+{% endblock %}
+
+  {% block css %}
+    <link href="{% static 'main/css/stats_team.css' %}" rel="stylesheet">
+  {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <h2 style="margin-top: 20px; padding: 20px;">Статистика команды</h2>
+  </div>
+  <div style="border-top: 1px solid rgba(128, 128, 128, 0.26);">
+
+
+      <div class="table-responsive" style="overflow: hidden;">
+        <table class="table table-responsive table-borderless">
+            
+          <thead>
+            <tr class="bg-light" style="text-align: center;">
+              <th scope="col" width="5%">#</th>
+              <th scope="col" width="40%">Игрок</th>
+              <th scope="col" width="20%">Сыгранные игры</th>
+              <th scope="col" width="20%">Количество голов</th>
+              <th scope="col" width="20%">Голы за игру</th>
+            </tr>
+          </thead>
+      <tbody>
+        {% with 0 as positions %}
+        {% for agp in agp %}
+        {% addpos positions as positions %}
+        <tr class="player" style="vertical-align: middle">
+          <td><h2 class="positions">{{ positions }}</h2></td>
+          <td class="name"><img class="rounded-circle" src="{{ agp.player.photo.url }}" width="25%">{{ agp.player.last_name }}</td>
+          <td style="text-align: center;"><h2 class="num">{{ agp.games }}</h2></td>
+          <td style="text-align: center;"><h2 class="num">{{ agp.goals }}</h2></td>
+          <td style="text-align: center;"><h2 class="num">{{ agp.get_goal_per_game }}</h2></td>
+        </tr>
+        {% endfor %}
+        {% endwith %}
+      </tbody>
+    </table>
+
+</div>
+</div>
+{% endblock %}

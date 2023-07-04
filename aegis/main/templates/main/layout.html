@@ -21,10 +21,11 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{% url 'home' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Главная</a></li>
           <li><a href="{% url 'all_news' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Новости</a></li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
             <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">Клуб</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item dropd" href="{% url 'players' %}">Состав команды</a></li>
+              <li><a class="dropdown-item dropd" href="{% url 'stats_team' %}">Статистика команды</a></li>
               <li><a class="dropdown-item dropd" href="{% url 'achievements' %}">Достижения</a></li>
               <li><a class="dropdown-item dropd" href="{% url 'history' %}">История</a></li>
             </ul>

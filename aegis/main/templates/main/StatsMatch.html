@@ -107,11 +107,7 @@
               <div class="slide">           
                 <a href="{% url 'details_player' scr.player.slug %}">
                   <div class="profile-card-2">
-                  {% if scr.player.photo == NULL %}
-                    <img class="img-fluid mx-auto d-block" src="{% static 'main/img/PlayersAE/NoPhoto.png' %}" alt="...">
-                  {% else %}
                   <img class="img-fluid mx-auto d-block" src="{{ scr.player.photo.url }}" alt="...">
-                  {% endif %}
                   <div class="profile-name"> {{ scr.player.number }} {{ scr.player.last_name }}</div>
                 </div> 
                 </a>
@@ -135,7 +131,7 @@
           <a href="{% url 'editor_scoring' mtch.slug %}">
             <button class="SMbttn">Редактировать заявку и голы</button>
           </a>
-          <a href="{% url 'add_match' %}">
+          <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <button class="SMbttn">Удалить матч</button>
           </a>
         </div>
@@ -143,6 +139,29 @@
       {% endif %}
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Внимание!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Вы точно хотите удалить матч?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button id="del" type="button" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelector('#del').onclick = function(e) {
+    location.replace("{% url 'del_match' mtch.slug %}")
+    }
+</script>
 
 <script src="{% static 'main/js/carusel.js' %}"></script>
 {% endblock %}

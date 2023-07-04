@@ -17,8 +17,17 @@
     
     <div class="news-block">
       <p class="publisher">Автор поста: {{ news.publisher }}</p>
-        <p class="datetime">{{ news.date_time }}</p> 
-        
+        <p class="datetime">{{ news.date_time }}</p>
+        {% if request.user.is_superuser %}     
+        <div class="d-flex justify-content-end">
+          <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="btn btn-outline-danger" style="width: 80px; ">Удалить</button>
+          </a>
+         <a href="{% url 'upd_new' news.slug %}">
+          <button type="button" class="btn btn-outline-success" style="width: 130px; ">Редактировать</button>
+          </a>
+        </div>
+        {% endif %}
         <div class="border-top" style="margin-bottom: 20px;"></div>
         <p style="white-space: pre-wrap;">{{ news.content }}</p>
     </div>
@@ -49,4 +58,28 @@
           {% endfor %} 
     </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Внимание!</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Вы точно хотите удалить новость?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button id="del" type="button" class="btn btn-danger">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      document.querySelector('#del').onclick = function(e) {
+        location.replace("{% url 'del_new' news.id %}")
+        }
+    </script>
 {% endblock %}
