@@ -1,13 +1,15 @@
 import json
 
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
-from .forms import RegistrationForm, SingInForm, AddNewForm, MatchForm, ScoringForm, PlayerForm
+from .forms import RegistrationForm, SingInForm, AddNewForm, MatchForm, ScoringForm, PlayerForm, WebPasswordResetForm, \
+    WebSetPasswordForm
 from .models import *
 from django.views.generic import CreateView, UpdateView
 
@@ -20,12 +22,12 @@ def fail_404(request, exception):
 
 def home(request):
     news = News.objects.order_by('-date_time')[:3]
-    players = Players.objects.order_by('number')
+    plrs = Players.objects.filter(out=None).order_by('number')
     merch1 = Products.objects.filter(Q(cat_id=1) & Q(kind_id=1)).order_by('-year')[:1]
     merch2 = Products.objects.filter(Q(cat_id=2) & Q(kind_id=1)).order_by('-year')[:1]
     merch3 = Products.objects.filter(Q(cat_id=3) & Q(kind_id=1)).order_by('-year')[:1]
     return render(request, 'main/Home.html',
-                  {'news': news, 'plrs': players,
+                  {'news': news, 'plrs': plrs,
                    'm1': merch1, 'm2': merch2, 'm3': merch3})
 
 
@@ -90,6 +92,25 @@ class SingIn(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('home')
+
+
+class WebPasswordReset(PasswordResetView):
+    template_name = 'main/password_reset_email.html'
+    form_class = WebPasswordResetForm
+
+
+class WebPasswordResetDone(PasswordResetDoneView):
+    template_name = 'main/password_reset_done.html'
+
+
+class WebPasswordResetConfirm(PasswordResetConfirmView):
+    template_name = 'main/password_reset_confirm.html'
+    form_class = WebSetPasswordForm
+
+
+class WebPasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'main/password_reset_complete.html'
+    form_class = WebSetPasswordForm
 
 
 def logout_user(request):
@@ -176,7 +197,12 @@ def match(request, slug_match):
     mtch = Matches.objects.get(slug=slug_match)
     if mtch.pk == int(Matches.objects.order_by('-date')[0].pk):
         return redirect('live_match', slug_match)
-    scr = Scoring.objects.filter(match_id=mtch.id)
+    scr = Scoring.objects.filter(match_id=mtch.id).order_by('-score')
+    count_scr = 0
+    for s in scr:
+        if s.score > 0:
+            count_scr += 1
+
     if TransMatch.objects.filter(match_id=mtch.id):
         trans = TransMatch.objects.get(match_id=mtch.id)
         mtch_vt = MatchEvent.objects.filter(trans_id=trans.id).order_by('-timestamp')
@@ -184,11 +210,13 @@ def match(request, slug_match):
             'mtch': mtch,
             'scr': scr,
             'mtch_vt': mtch_vt,
-            'trans': trans
+            'trans': trans,
+            'count': count_scr
         })
     return render(request, 'main/StatsMatch.html', {
         'mtch': mtch,
-        'scr': scr
+        'scr': scr,
+        'count': count_scr
     })
 
 
@@ -253,7 +281,12 @@ def live_match(request, slug_match):
     user = mark_safe(json.dumps(''))
     if request.user.is_authenticated:
         user = mark_safe(json.dumps(request.user.email))
-    scr = Scoring.objects.filter(match_id=mtch.id)
+    scr = Scoring.objects.filter(match_id=mtch.id).order_by('-score')
+    count_scr = 0
+    for s in scr:
+        if s.score > 0:
+            count_scr += 1
+
     trans = TransMatch.objects.get(match_id=mtch.id)
     timer = 'false'
     if (trans.start_1 and not trans.pause) or (trans.start_2 and not trans.end):
@@ -263,7 +296,8 @@ def live_match(request, slug_match):
         'scr': scr,
         'username': user,
         'trans': trans,
-        'timer': timer
+        'timer': timer,
+        'count': count_scr
     })
 
 

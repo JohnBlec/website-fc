@@ -90,6 +90,25 @@
     bottom: 60px;
 }
 
+.profile-overview {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0));
+  color: #FFF;
+  padding: 50px 0px 20px 0px;
+  transition: all 0.15s linear;
+}
+
+.profile-overview h3 {
+  font-weight: bold;
+}
+
+.profile-overview p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* Фильтр */
 
 .text_filter {

@@ -19,9 +19,9 @@
           <button class="Nbttn">Добавить игрока</button>
         </a>
         {% endif %}
-    <div class="row" style="margin-top: 20px;">
+    <div class="row row-cols-auto" style="margin-top: 20px;">
       {% for pl in players %}
-      <div class="col-md-3">
+      <div class="col">
         <a href="{% url 'details_player' pl.slug %}">
       <div class="profile-card-2">
           <img class="img-fluid mx-auto d-block" src="{{ pl.photo.url }}" alt="...">

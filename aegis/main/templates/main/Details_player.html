@@ -27,10 +27,10 @@
                     </p>
                     {% if plr.characteristic > '' %}
                     <div class="row">
-                      <div class="col-md-2 col-xl-6">
+                      <div class="col-md-6 col-xl-6">
                           <div class="card bg-c-left order-card">
                               <div class="card-block text-center">
-                                  <h5 class="m-b-20">Выступления</h6>
+                                  <h5 class="m-b-20">Игры</h6>
                                   <h2 class="num">
                                     {% if agp %}
                                     {{ agp.games }}
@@ -51,7 +51,7 @@
                           </div>
                       </div>
                       
-                      <div class="col-md-2 col-xl-6">
+                      <div class="col-md-6 col-xl-6">
                           <div class="card bg-c-right order-card">
                               <div class="card-block text-center">
                                   <h5 class="m-b-20">Голы</h6>
@@ -78,14 +78,14 @@
                     {% endif %}
                     <div class="row">
                       {% if request.user.is_superuser %}
-                      <div class="col-md-2 col-xl-6">
+                      <div class="col-md-6 col-xl-6">
                         <a href="" class="linkM" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <button class="Nbttn btn btn-outline-danger">Удалить</button>
                       </a>
                     </div>
-                    <div class="col-md-2 col-xl-6">
+                    <div class="col-md-6 col-xl-6">
                       <a href="{% url 'upd_player' plr.slug %}">
-                        <button class="Nbttn btn btn-outline-success">Редактировать</button>
+                        <button class="Nbttn btn btn-outline-success">Изменить</button>
                       </a>
                     </div>
                       {% endif %}
@@ -100,10 +100,10 @@
                     </p>
                     {% if plr.characteristic == '' %}
                     <div class="row">
-                      <div class="col-md-2 col-xl-6">
+                      <div class="col-md-6 col-xl-6">
                           <div class="card bg-c-left order-card">
                               <div class="card-block text-center">
-                                  <h5 class="m-b-20">Выступления</h6>
+                                  <h5 class="m-b-20">Игры</h6>
                                   <h2 class="num">
                                     {% if agp %}
                                     {{ agp.games }}
@@ -124,7 +124,7 @@
                           </div>
                       </div>
                       
-                      <div class="col-md-2 col-xl-6">
+                      <div class="col-md-6 col-xl-6">
                           <div class="card bg-c-right order-card">
                               <div class="card-block text-center">
                                   <h5 class="m-b-20">Голы</h6>

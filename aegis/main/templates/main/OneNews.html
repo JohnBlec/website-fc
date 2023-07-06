@@ -13,9 +13,9 @@
 {% block content %}
     <div class="container border-bottom">
         <p class="text-center title" style="margin-top: 20px; margin-bottom: 30px">{{ news.title }}</p>
-        <img class="shadow rounded mx-auto d-block"  height="500px"  src="{{ news.img.url }}">
+        <img class="shadow rounded mx-auto d-block img-new" style="margin-bottom: 30px;" src="{{ news.img.url }}">
     
-    <div class="news-block">
+    <div class="news-block" style="margin: auto">
       <p class="publisher">Автор поста: {{ news.publisher }}</p>
         <p class="datetime">{{ news.date_time }}</p>
         {% if request.user.is_superuser %}     

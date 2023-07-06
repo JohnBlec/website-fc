@@ -1,7 +1,17 @@
+@media screen and (min-width: 1024px) {
+    .img-new {
+        height: 500px;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .img-new {
+        height: 500px;
+    }
+}
+
 .news-block {
-    margin-top: 50px;
-    max-width: 790px;
-    margin-left: 160px;
+    max-width: 900px;
 }
 
 .datetime {

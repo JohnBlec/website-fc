@@ -13,15 +13,22 @@
 <body>
   <header class="p-2" style="background: rgba(0, 0, 0, 0.116);">
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <img src="{% static 'main/img/Aegis_Logo.png' %}" alt="Aegis Logo" width="90" height="90">
-        </a>
+      <nav class="navbar navbar-expand-lg" aria-label="Fifth navbar example">
+          <div class="container-fluid">
+            <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <img src="{% static 'main/img/Aegis_Logo.png' %}" alt="Aegis Logo" width="90" height="90">
+          </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <div class="collapse navbar-collapse" id="navbarsExample05">
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'home' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Главная</a></li>
-          <li><a href="{% url 'all_news' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Новости</a></li>
-          <li class="nav-item">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Главная</a></li>
+          <li class="nav-item"><a href="{% url 'all_news' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Новости</a></li>
+          <li class="nav-item dpd">
             <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">Клуб</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item dropd" href="{% url 'players' %}">Состав команды</a></li>
@@ -30,28 +37,31 @@
               <li><a class="dropdown-item dropd" href="{% url 'history' %}">История</a></li>
             </ul>
           </li>
-          <li><a href="{% url 'matches' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Матчи</a></li>
-          <li><a href="{% url 'table' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Таблица</a></li>
-          <li><a href="{% url 'shop' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Магазин</a></li>
+          <li class="nav-item"><a href="{% url 'matches' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Матчи</a></li>
+          <li class="nav-item"><a href="{% url 'table' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Таблица</a></li>
+          <li class="nav-item"><a href="{% url 'shop' %}" class="nav-link px-4 link-secondary" style="font-weight: bold;">Магазин</a></li>
+          <div class="text-end">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dpd">
+              <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">{{ user.email }}</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item dropd" href="{% url 'cart' %}">Корзина</a></li>
+                <li><a class="dropdown-item dropd" href="{% url 'logout' %}">Выйти</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <a href="{% url 'singIn' %}">
+            <button type="button" class="btn btn-secondary me-2">Вход</button>
+            </a>
+            {% endif %}
+          </div>
         </ul>
 
-        <div class="text-end">
-          {% if request.user.is_authenticated %}
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle px-4 link-secondary" style="font-weight: bold;" href="" data-bs-toggle="dropdown" aria-expanded="false">{{ user.email }}</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item dropd" href="{% url 'cart' %}">Корзина</a></li>
-              <li><a class="dropdown-item dropd" href="{% url 'logout' %}">Выйти</a></li>
-            </ul>
-          </div>
-          {% else %}
-          <a href="{% url 'singIn' %}">
-          <button type="button" class="btn btn-secondary me-2">Вход</button>
-          </a>
-          {% endif %}
-        </div>
+
       </div>
     </div>
+</nav>
+  </div>
 </header>
 
   {% block content %}

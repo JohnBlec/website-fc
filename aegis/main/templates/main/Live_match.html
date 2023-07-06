@@ -104,6 +104,9 @@
   <nav>
     <div class="nav nav-tabs scoreboard__nav" id="nav-tab" role="tablist">
       <a class="nav-item scoreboard__nav-el active" id="nav-live-tab" data-bs-toggle="tab" href="#nav-live" role="tab" aria-controls="nav-live" aria-selected="true">События</a>
+      {% if scr %}
+      <a class="nav-item scoreboard__nav-el" id="nav-stats-tab" data-bs-toggle="tab" href="#nav-goals" role="tab" aria-controls="nav-goals" aria-selected="false">Статистика</a>
+      {% endif %}
       <a class="nav-item scoreboard__nav-el" id="nav-stats-tab" data-bs-toggle="tab" href="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Состав</a>
       {% if request.user.is_superuser %}
       <a class="nav-item scoreboard__nav-el" id="nav-editor-tab" data-bs-toggle="tab" href="#nav-editor" role="tab" aria-controls="nav-editor" aria-selected="false">Редактор</a>
@@ -175,6 +178,38 @@
         </div>
       </div>
     </div>
+    {% if scr %}
+    <div class="tab-pane fade" id="nav-goals" role="tabpanel" aria-labelledby="nav-goals-tab">
+      <div id="container">
+        <div class="row" style="margin-top: 20px;">
+          {% for sc in scr %}
+          {% if sc.score > 0 %}
+          {% if count > 2 %}
+          <div class="col-md-3">
+          {% else %}
+          {% if count > 1 %}
+          <div class="col-md-5">
+          {% else %}
+          <div class="col-md-10">
+          {% endif %}
+          {% endif %} 
+                <a href="{% url 'details_player' sc.player.slug %}">
+                  <div class="profile-card-2">
+                  <img class="img-fluid mx-auto d-block" src="{{ sc.player.photo.url }}" alt="...">
+                  <div class="profile-goals">
+                    <h3>{{ sc.score }}</h3>
+                  </div>
+                  <div class="profile-name"> {{ sc.player.number }} {{ sc.player.last_name }}</div>
+                 </div> 
+                </a>
+              </div>
+              {% endif %}              
+              {% endfor %}
+            </div>     
+          <span onclick="slideLeft()" class="btn"></span>
+        </div>
+    </div>
+    {% endif %}
     <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
       <div id="container">
         {% if scr %}

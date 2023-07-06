@@ -24,13 +24,13 @@
               <th scope="row">{{ positions }}</th>
               <td><img src="{{ ts.club.logo.url }}" style="height: 45px;"></td>
               <td>{{ ts.club.name }}</td>
-              <td>{{ ts.games }}</td>
-              <td>{{ ts.wins }}</td>
-              <td>{{ ts.draws }}</td>
-              <td>{{ ts.loses }}</td>
-              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
-              <td>{{ ts.goal_difference }}</td>
-              <td>{{ ts.pts }}</td>
+              <td class="text-center">{{ ts.games }}</td>
+              <td class="text-center">{{ ts.wins }}</td>
+              <td class="text-center">{{ ts.draws }}</td>
+              <td class="text-center">{{ ts.loses }}</td>
+              <td class="text-center">{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td class="text-center">{{ ts.goal_difference }}</td>
+              <td class="text-center">{{ ts.pts }}</td>
             </tr>
         {% else %}
         </tbody>
@@ -54,31 +54,31 @@
      <table class="table table-hover">
         <thead>
             <tr style="background: rgb(211, 211, 211);">
-              <th scope="col" class="headt">#</th>
-              <th scope="col" class="headt"></th>
-              <th scope="col" class="headt">Команда</th>
-              <th scope="col" class="headt">Игры</th>
-              <th scope="col" class="headt">В</th>
-              <th scope="col" class="headt">Н</th>
-              <th scope="col" class="headt">П</th>
-              <th scope="col" class="headt">Мячи</th>
-              <th scope="col" class="headt">РМ</th>
-              <th scope="col" class="headt">Очков</th>
-            </tr>
+              <th scope="col" class="headt text-center">#</th>
+              <th scope="col" class="headt text-center"></th>
+              <th scope="col" class="headt text-center">Команда</th>
+              <th scope="col" class="headt text-center">Игры</th>
+              <th scope="col" class="headt text-center">В</th>
+              <th scope="col" class="headt text-center">Н</th>
+              <th scope="col" class="headt text-center">П</th>
+              <th scope="col" class="headt text-center">Мячи</th>
+              <th scope="col" class="headt text-center">РМ</th>
+              <th scope="col" class="headt text-center">Очков</th>
+            </tr> text-center
           </thead>
          {% addpos 0 as positions %}
           <tbody>
-          <tr class="{% if ts.q_we == True %} tAegis play-off {% endif %}" style="vertical-align: middle">
+          <tr {% if ts.q_we == True %} class=" tAegis play-off" {% endif %} style="vertical-align: middle">
               <th scope="row">{{ positions }}</th>
               <td><img src="{{ ts.club.logo.url }}" style="height: 45px;"></td>
               <td>{{ ts.club.name }}</td>
-              <td>{{ ts.games }}</td>
-              <td>{{ ts.wins }}</td>
-              <td>{{ ts.draws }}</td>
-              <td>{{ ts.loses }}</td>
-              <td>{{ ts.goal_for }}:{{ ts.goal_against }}</td>
-              <td>{{ ts.goal_difference }}</td>
-              <td>{{ ts.pts }}</td>
+              <td class="text-center">{{ ts.games }}</td>
+              <td class="text-center">{{ ts.wins }}</td>
+              <td class="text-center">{{ ts.draws }}</td>
+              <td class="text-center">{{ ts.loses }}</td>
+              <td class="text-center">{{ ts.goal_for }}:{{ ts.goal_against }}</td>
+              <td class="text-center">{{ ts.goal_difference }}</td>
+              <td class="text-center">{{ ts.pts }}</td>
             </tr>
 
         {% endif %}

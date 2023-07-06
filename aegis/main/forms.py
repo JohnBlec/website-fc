@@ -1,6 +1,8 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import password_validation
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django import forms
 from .models import *
+from django.utils.translation import gettext_lazy as _
 
 
 class RegistrationForm(UserCreationForm):
@@ -16,6 +18,31 @@ class RegistrationForm(UserCreationForm):
 class SingInForm(AuthenticationForm):
     username = forms.CharField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+class WebPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email", 'class': 'form-control'}),
+    )
+
+
+class WebSetPasswordForm(SetPasswordForm):
+    error_messages = {
+        "password_mismatch": _("The two password fields didn’t match."),
+    }
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
+    )
 
 
 class AddNewForm(forms.ModelForm):

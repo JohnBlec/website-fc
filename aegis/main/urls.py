@@ -1,12 +1,18 @@
+from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 from . import views
-from .views import Registration, SingIn, NewsUpdateView, PlayerUpdateView
+from .views import Registration, SingIn, NewsUpdateView, PlayerUpdateView, WebPasswordReset, WebPasswordResetDone, \
+    WebPasswordResetConfirm, WebPasswordResetComplete
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('singIn', SingIn.as_view(), name='singIn'),
     path('logout', views.logout_user, name='logout'),
     path('registration', Registration.as_view(), name='registration'),
+    path("password_reset", WebPasswordReset.as_view(), name="password_reset"),
+    path("password_reset/done/", WebPasswordResetDone.as_view(), name="password_reset_done"),
+    path("reset/<uidb64>/<token>/", WebPasswordResetConfirm.as_view(), name="password_reset_confirm"),
+    path("reset/done/", WebPasswordResetComplete.as_view(), name="password_reset_complete"),
     path('news', views.all_news, name='all_news'),
     path('news/add_new', views.add_new, name='add_new'),
     path('news/<slug:news_slug>', views.news, name='news'),

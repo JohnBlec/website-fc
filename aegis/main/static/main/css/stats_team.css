@@ -8,6 +8,7 @@
 
 .player {
     user-select: none;
+    cursor: pointer;
 }
 
 .player:hover {

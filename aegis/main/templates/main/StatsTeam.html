@@ -18,7 +18,7 @@
   <div style="border-top: 1px solid rgba(128, 128, 128, 0.26);">
 
 
-      <div class="table-responsive" style="overflow: hidden;">
+      <div class="table" style="overflow: hidden;">
         <table class="table table-responsive table-borderless">
             
           <thead>
@@ -34,12 +34,13 @@
         {% with 0 as positions %}
         {% for agp in agp %}
         {% addpos positions as positions %}
-        <tr class="player" style="vertical-align: middle">
+        
+        <tr class="player" style="vertical-align: middle" onclick="window.location.href='{% url 'details_player' agp.player.slug %}'; return false">
           <td><h2 class="positions">{{ positions }}</h2></td>
           <td class="name"><img class="rounded-circle" src="{{ agp.player.photo.url }}" width="25%">{{ agp.player.last_name }}</td>
           <td style="text-align: center;"><h2 class="num">{{ agp.games }}</h2></td>
           <td style="text-align: center;"><h2 class="num">{{ agp.goals }}</h2></td>
-          <td style="text-align: center;"><h2 class="num">{{ agp.get_goal_per_game }}</h2></td>
+          <td style="text-align: center;"><h2 class="num">{{ agp.get_goal_per_game }}</h2></td>  
         </tr>
         {% endfor %}
         {% endwith %}
