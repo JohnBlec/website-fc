@@ -149,5 +149,5 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 EMAIL_HOST_USER = 'JohnBlec@yandex.ru'
-EMAIL_HOST_PASSWORD = 'lxztogcklerbriht'
+EMAIL_HOST_PASSWORD = '*'
 DEFAULT_FROM_EMAIL = 'JohnBlec@yandex.ru'
